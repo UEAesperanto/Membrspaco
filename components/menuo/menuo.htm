@@ -1,0 +1,34 @@
+<div data-ng-init="init()">
+  <div id="mySidenav" class="sidenav">
+    <div class="nav-logoo">
+       <img src="content/img/logoo_blanka.png" alt="logoo"></img>
+    </div>
+    <a href="javascript(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <span ng-repeat="menuero in menueroj">
+      <label class="menutitolo" ng-click="menuero[0].montri = !menuero[0].montri">
+        <span ng-hide="menuero[0].montri">+</span>
+        <span ng-show="menuero[0].montri">-</span>
+        {{menuero[0].titolo}}
+      </label><br>
+      <span ng-show="menuero[0].montri">
+      <a ng-repeat="ligilo in menuero | limitTo: (1 - menuero.length)"
+         class="menuero"
+         ng-class="ligilo.ngClass"
+         ng-click="selektita($index, menuero)"
+         href="{{ligilo.link}}">
+         {{ligilo.titolo}}
+      </a>
+    </span>
+  </span>
+  </div>
+
+  <div class="menubar">
+    <span class="menuo" onclick="openNav()">&#9776; Menuo</span>
+    <span class="profilo" ng-click="elsaluti()">
+      <i class="fa fa-power-off" aria-hidden="true"></i> Elsaluti
+    </span>
+    <span class="uzantnomo">
+      <i class="fa fa-user" aria-hidden="true"></i> {{uzanto.uzantnomo}}
+    </span>
+  </div>
+</div>

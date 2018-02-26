@@ -1,0 +1,21 @@
+version: '3'
+services:
+  server:
+    build: ./docker/server
+    image: uea-admin
+    restart: always
+    container_name: uea-admin
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/app
+
+  livereload:
+    build: ./docker/livereload
+    image: livereload
+    restart: always
+    container_name: livereload
+    ports:
+      - 35729:35729
+    volumes:
+      - ./:/app

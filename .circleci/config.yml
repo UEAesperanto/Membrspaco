@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/cci-demo-docker-primary:0.0.2
+
+    branches:
+      only:
+        - master
+
+    steps:
+      - checkout
+
+      - run:
+          name: Deploy GitHub Pages
+          command: |
+            set -x
+            git checkout gh-pages && git merge master
+            git add .
+            git -c user.name='CircleCI' -c user.email='circleci' push
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+
+      - store_test_results:
+          path: /tmp/test-results
