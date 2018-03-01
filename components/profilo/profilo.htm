@@ -1,0 +1,139 @@
+<div class="enhavo" data-ng-init="init()">
+  <h3 class="col-md-9">
+    Bonvenon, {{uzanto.titolo}} {{uzanto.personanomo}}
+    <b>{{uzanto.familianomo}}</b>
+    <b ng-if="uzanto.ueakodo">(via UEA-kodo:</b> {{uzanto.ueakodo}})
+  </h3>
+  <div class="col-md-4" style="align:center">
+    <h2>Profilbildo:</h2>
+    <img src="{{bildo}}" alt="profilbildo" class="profilbildo"></img>
+    <br>
+    <button
+       type="file"
+       class="btn btn-default"
+       ngf-select
+       ng-model="file"
+       name="file"
+       ngf-pattern="'image/*'"
+       accept="image/*"
+       ngf-max-size="20MB">
+       Redakti aŭ aldoni profilbildon
+     </button>
+     <br><br>
+    <p ng-show="file">
+      Antaŭvido: <img style="width:100px;" ngf-thumbnail="file"/>
+      <i ng-show="up.upload_form.file.$error.maxSize">Tro granda bildo
+      {{file.size / 1000000|number:1}}MB: max 20M</i>
+      <br><br>
+      <button
+        type="submit"
+        class="btn btn-default"
+        ng-click="upload()">
+        Konfirmi alŝuton
+      </button>
+    </p>
+    <h4>
+      Anecoj:
+    </h4>
+
+    <ul ng-repeat="grupo in grupoj">
+      <li>
+          <b>{{grupo.nomo}}</b>:
+          ekde {{grupo.komencdato}} ĝis {{grupo.findato || "dumvive"}}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-8">
+    <h2>Pri vi: </h2>
+    <p>
+      <b>Retpoŝtadreso kaj uzantnomo:</b> {{uzanto.retposxto}}
+      <a href="#"
+         onbeforesave="updateUzanto($data, 'retposxto')"
+         editable-email="uzanto.retposxto">
+        Ŝanĝi uzantnomon
+      </a>
+    </p>
+    <p>
+      <b>Pasvorto:</b>
+      <a href="#"
+         onbeforesave="updateUzanto($data, 'pasvorto')"
+         editable-password="uzanto.pasvorto">
+        Ŝanĝi pasvorton
+      </a>
+    </p>
+
+    <p>
+      <b>tttpaĝo:</b> {{uzanto.tttpagxo}}
+      <a href="#"
+         onbeforesave="updateUzanto($data, 'tttpagxo')"
+         editable-text="uzanto.tttpagxo">
+        redakti aŭ aldoni
+      </a>
+    </p>
+
+    <p>
+      <b>Hejmtelefono:</b>
+      +{{landInformoj.callingCodes[0]}} {{uzanto.telhejmo}}
+      <a href="#"
+         onbeforesave="updateUzanto($data, 'telhejmo')"
+         editable-text="uzanto.telhejmo">
+        redakti aŭ aldoni
+      </a>
+    </p>
+
+    <p>
+      <b>Oficeja telefono:</b>
+      +{{landInformoj.callingCodes[0]}} {{uzanto.teloficejo}}
+      <a href="#"
+         onbeforesave="updateUzanto($data, 'teloficejo')"
+         editable-text="uzanto.teloficejo">
+        redakti aŭ aldoni
+      </a>
+    </p>
+
+    <p>
+      <b>Poŝtelefono:</b>
+      +{{landInformoj.callingCodes[0]}} {{uzanto.telportebla}}
+      <a href="#"
+         onbeforesave="updateUzanto($data, 'telportebla')"
+         editable-text="uzanto.telportebla">
+        redakti aŭ aldoni
+      </a>
+    </p>
+
+    <p>
+      <b>titolo:</b> {{uzanto.titolo}}
+      <a href="#"
+         onbeforesave="updateUzanto($data, 'titolo')"
+         editable-select="uzanto.titolo"
+         e-ng-options="s as s for s in titoloj">
+        redakti aŭ aldoni
+      </a>
+    </p>
+    -------
+    <p>
+      Se unu aŭ pli de la ontaj informoj ne ŝajnas korektaj, aŭ se vi deziras
+      viŝi viajn informojn, skribu al <b>sekretario@co.uea.org</b>
+    </p>
+    <p>
+      <b>Personana nomo:</b> {{uzanto.personanomo}}
+    </p>
+    <p>
+      <b>Familia nomo:</b> {{uzanto.familianomo}}
+    </p>
+    <p>
+      <b>Naskiĝtago (JJJJ-MM-TT):</b> {{uzanto.naskigxtago}}
+    </p>
+    <p>
+      <b>Adreso:</b> {{uzanto.adreso}}
+    </p>
+    <p>
+      <b>Poŝtkodo:</b> {{uzanto.posxtkodo}}
+    </p>
+    <p>
+      <b>Lando: </b> {{lando.radikoEo + lando.finajxoEo}}
+      <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
+    </p>
+ </div>
+</div>
+</div>

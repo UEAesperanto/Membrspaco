@@ -7,5 +7,9 @@ angular.module('membrspaco').config(function($routeProvider){
     .when("/", {
       templateUrl: "components/login/login.htm",
       controller: "loginCtrl"
+    })
+    .when("/profilo", {
+      templateUrl: "components/profilo/profilo.htm",
+      controller: "profiloCtrl"
     });
 });

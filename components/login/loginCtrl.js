@@ -5,8 +5,8 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $mdDialog, $sanit
     $scope.menuo = false;
     $scope.msg = "ERARO: Ni ne havas konekton kun la servilo nun";
 
-    // if (($window.localStorage.getItem('token') != null) &&
-    //     ($window.localStorage.getItem('token') != 0)){
+    // if (($window.localStorage.getItem('tokenUzanto') != null) &&
+    //     ($window.localStorage.getItem('tokenUzanto') != 0)){
     //   $window.location.href = '#!/membroj';
     //   $window.location.reload();
     // }
@@ -17,10 +17,10 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $mdDialog, $sanit
 
   $scope.ensaluti = function() {
       loginService.doEnsaluti($scope.uzanto).then(function(response) {
-          $window.localStorage.setItem('token', response.data.token);
+          $window.localStorage.setItem('tokenUzanto', response.data.token);
           $window.localStorage.setItem('uzanto', JSON.stringify(response.data.uzanto));
-        //  $window.location.href = '#!/membroj';
-          //$window.location.reload();
+          $window.location.href = '#!/profilo';
+          $window.location.reload();
         }, function(response) {
           $scope.msg = response.data.message;
       });

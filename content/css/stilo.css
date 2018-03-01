@@ -189,7 +189,7 @@ a {
   padding-top: 10px;
 }
 
- .ui-select-choices  {
+.ui-select-choices  {
   top: 30px;
 }
 
@@ -204,14 +204,15 @@ md-input-container.md-block {
 }
 
 .menuo {
-  cursor:pointer;
+  cursor: pointer;
   font-size: 20px;
   padding: 20px;
+  position: absolute;
 }
 
 .profilo {
-  cursor:pointer;
-  float:right;
+  cursor: pointer;
+  float: right;
   font-size: 20px;
   margin-right: 10px;
 }
@@ -241,6 +242,14 @@ md-input-container.md-block {
   .form {
     margin-left: 0px;
     width: 100%;
+  }
+
+  .menubar > span {
+    font-size: 15px;
+  }
+
+  .menubar {
+    height: 40px;
   }
 
   .membrigxi {

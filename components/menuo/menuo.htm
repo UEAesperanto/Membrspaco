@@ -3,9 +3,10 @@
     <div class="nav-logoo">
        <img src="content/img/logoo_blanka.png" alt="logoo"></img>
     </div>
-    <a href="javascript(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a class="closebtn" onclick="closeNav()"> &times; </a>
     <span ng-repeat="menuero in menueroj">
-      <label class="menutitolo" ng-click="menuero[0].montri = !menuero[0].montri">
+      <a href="{{menuero.ligilo}}">{{menuero.nomo}}</a>
+      <!-- <label class="menutitolo" ng-click="menuero[0].montri = !menuero[0].montri">
         <span ng-hide="menuero[0].montri">+</span>
         <span ng-show="menuero[0].montri">-</span>
         {{menuero[0].titolo}}
@@ -17,18 +18,26 @@
          ng-click="selektita($index, menuero)"
          href="{{ligilo.link}}">
          {{ligilo.titolo}}
-      </a>
+      </a> -->
     </span>
   </span>
   </div>
 
   <div class="menubar">
-    <span class="menuo" onclick="openNav()">&#9776; Menuo</span>
+
     <span class="profilo" ng-click="elsaluti()">
       <i class="fa fa-power-off" aria-hidden="true"></i> Elsaluti
     </span>
-    <span class="uzantnomo">
-      <i class="fa fa-user" aria-hidden="true"></i> {{uzanto.uzantnomo}}
+
+    <span class="profilo">
+      <a href="#!/profilo">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        Profilo
+      </a>
+    </span>
+
+    <span class="menuo" onclick="openNav()">
+      &#9776; Menuo
     </span>
   </div>
 </div>
