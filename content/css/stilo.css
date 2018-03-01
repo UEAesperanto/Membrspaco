@@ -1,8 +1,11 @@
-body {
- font-family: 'Montserrat';
- max-height: 2000px;
-}
 
+html, body, .ng-scope {
+  font-family: 'Montserrat';
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
 h2 {
   font-size: 20px;
 }
@@ -39,41 +42,42 @@ h2 {
 }
 
 .form {
-  background-color: #333333;
-  color:white;
+  background-color: #F1F3F7;
   border-radius: 4px;
   padding: 15px;
   width:  450px;
   margin-left: 30%;
+}
+
+.form a {
+  color: #4da6ff;
 }
 
 .membrigxi {
   background-color: #326464;
-  color:white;
   border-radius: 4px;
   padding: 15px;
   width:  450px;
   margin-left: 30%;
 }
 
+.membrigxi a {
+  color:white;
+}
+
 .logoo {
   margin-top:4%;
-  margin-left:15px;
-  display:inline-block;
+  margin-left:10%;
+  /* display:inline-block; */
   float: left;
   margin-right:7px;
   width: 50px;
 }
 
-.titolo {
-  float: middle;
-  margin-left: 30%;
-}
-
 /*titolo de la retejo - fonto*/
 .titolo h1 {
-  margin-top:7%;
-  position: relative;
+  /* margin-top:7%; */
+  /* position: relative; */
   font-size: 17px;
   color:black;
 }
@@ -235,6 +239,11 @@ md-input-container.md-block {
   }
 
   .form {
+    margin-left: 0px;
+    width: 100%;
+  }
+
+  .membrigxi {
     margin-left: 0px;
     width: 100%;
   }
