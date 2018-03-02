@@ -50,14 +50,21 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $mdDialog,
     if(kampo == 'retposxto') {
       var data2 = {valoro: valoro, kampo: "uzantnomo"};
       profiloService.updateUzanto($scope.unuaUzanto.id, data2).then(
-        function(sucess){
+        function(response){
+          profiloService.updateUzanto($scope.unuaUzanto.id, data).then(
+            function(sucess){
+              $window.location.reload();
+            }, errorService.error);
+        }, function(response) {
+          window.alert("La retadreso verŝajne jam estas uzata de alia uzanto");
           $window.location.reload();
+        });
+      } else {
+        profiloService.updateUzanto($scope.unuaUzanto.id, data).then(
+          function(sucess){
+            $window.location.reload();
         }, errorService.error);
     }
-    profiloService.updateUzanto($scope.unuaUzanto.id, data).then(
-      function(sucess){
-        $window.location.reload();
-      }, errorService.error);
   }
 
 });
