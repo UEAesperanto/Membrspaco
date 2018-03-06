@@ -2,8 +2,14 @@
   <h3 class="col-md-9">
     Bonvenon, {{uzanto.titolo}} {{uzanto.personanomo}}
     <b>{{uzanto.familianomo}}</b>
-    <b ng-if="uzanto.ueakodo">(via UEA-kodo:</b> {{uzanto.ueakodo}})
   </h3>
+  <span ng-if="gxis">
+    <h3 class="col-md-3">
+      <button class="btn btn-default" onclick="window.print()">
+        <i class="fa fa-print" aria-hidden="true"></i> Printi membrkarton
+      </button>
+    </h3>
+  </span>
   <div class="col-md-4" style="align:center">
     <h2>Profilbildo:</h2>
     <img src="{{bildo}}" alt="profilbildo" class="profilbildo"></img>
@@ -35,7 +41,6 @@
     <h4>
       Anecoj:
     </h4>
-
     <ul ng-repeat="grupo in grupoj">
       <li>
           <b>{{grupo.nomo}}</b>:
@@ -131,9 +136,48 @@
       <b>Poŝtkodo:</b> {{uzanto.posxtkodo}}
     </p>
     <p>
-      <b>Lando: </b> {{lando.radikoEo + lando.finajxoEo}}
+      <b>Lando:</b> {{lando.radikoEo + lando.finajxoEo}}
       <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
+    </p>
+    <p ng-if="uzanto.ueakodo" class="col-md-12">
+      <b>Via UEA-kodo:</b> {{uzanto.ueakodo}}
     </p>
  </div>
 </div>
+</div>
+
+<div id="membrkarto">
+  <div style="width:323px; border-style: dotted; height: 204px; padding: 10px 20px 0px 20px; border-width:1px;">
+    <div style="width:323px; padding-left:40px; padding-bottom:30px;">
+      <img src="content/img/logoo.png" style="width:30px;"></img>
+      <span style="font-size:15px;">UEA - Membrkarto</span>
+    </div>
+    <span style="float:left;">
+      <img src="{{bildo}}" alt="profilbildo" style="width:80px;"></img>
+    </span>
+    <span style="width:180px; float:right;">
+      {{uzanto.titolo}} {{uzanto.personanomo}} {{uzanto.familianomo}}
+      <br>
+      UEA-kodo: {{uzanto.ueakodo}}
+      <br>
+      {{gxis}}
+      <br>
+      {{lando.radikoEo + lando.finajxoEo}}
+      <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
+    </span>
+  </div>
+  <div style="width:323px; border-style: dotted; height: 204px;
+              padding: 10px 20px 0px 20px; border-width:1px; background-color:#326464 !important;
+              transform: rotate(180deg); color: white !important;">
+    <p style="font-size:30px; padding-top: 10px; color: white !important;">Membrkarto</p>
+    <img src="content/img/logoo_blanka.png" alt="profilbildo"
+         style="width:250px; padding-left: 10px; padding-top: 40px;"></img>
+
+    <p style="font-size:12px; padding-left:0px; padding-top:5px; color: white!important;">
+      En oficialaj rilatoj kun UN kaj UNESKO
+    </p>
+    <p style="font-size:12px; padding-left:0px; padding-top:5px;color: white!important;">
+      www.UEA.org
+    </p>
+  </div>
 </div>

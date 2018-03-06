@@ -6,6 +6,7 @@ app.service('profiloService', function ($http, $window, Upload, config) {
     service.alsxultiBildon = alsxultiBildon;
     service.getGrupoj = getGrupoj;
     service.updateUzanto = updateUzanto;
+    service.getGrupKat = getGrupKat;
 
     function getUzanto(id) {
       var req = {
@@ -50,6 +51,10 @@ app.service('profiloService', function ($http, $window, Upload, config) {
         headers: {'x-access-token': $window.localStorage.getItem('tokenUzanto')}
       };
       return $http(req);
+    }
+
+    function getGrupKat(idKat) {
+      return $http.get(config.api_url + "/grupoj/kategorioj/" + idKat + "/sub");
     }
 
     return service;

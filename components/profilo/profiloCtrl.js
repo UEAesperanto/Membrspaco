@@ -1,7 +1,6 @@
-app.controller("profiloCtrl", function ($scope, $rootScope, $window, $mdDialog,
-                                        $sanitize,
+app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
                                         auth, profiloService, errorService,
-                                        landojService) {
+                                        landojService, config) {
   $scope.init = function() {
     auth.ensalutita();
     $rootScope.menuo = true;
@@ -19,6 +18,10 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $mdDialog,
       }, errorService.error);
     }, errorService.error);
 
+    $scope.titoloj = ["S-ro", "S-rino", "D-ro",
+                      "D-rino", "Profesoro", "Profesorino",
+                      "Magistro", "Magistrino", "Pastro", "Pastrino", "alia"];
+
     profiloService.elsxutiBildon($scope.unuaUzanto.id).then(
       function(response) {
         $scope.bildo = response.data;
@@ -28,12 +31,31 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $mdDialog,
      });
 
      profiloService.getGrupoj($scope.unuaUzanto.id).then(function(response) {
-       $scope.grupoj = response.data;
+       $scope.grupoj = response.data.filter(function(grupo){
+          return grupo.aprobita == 1;
+        });
        for (var i = 0; i < $scope.grupoj.length; i++) {
          $scope.grupoj[i].komencdato = $scope.grupoj[i].komencdato.slice(0,10);
          if($scope.grupoj[i].findato)
              $scope.grupoj[i].findato = $scope.grupoj[i].findato.slice(0,10);
        }
+       config.getConfig("idMembrecgrupo").then(function(response) {
+         $scope.idMembrecgrupo = response.data.idMembrecgrupo;
+         profiloService.getGrupKat($scope.idMembrecgrupo).then(function(response){
+           $scope.membrecgrupo  = $scope.grupoj.slice().filter(function(grupo){
+             return response.data.map(function(e){return e.id;}).indexOf(grupo.idGrupo) > -1;
+           });
+           if($scope.membrecgrupo.length > 0) {
+             if($scope.membrecgrupo[0].findato == null) {
+               $scope.gxis = "Dumviva membro";
+             } else {
+               var finjaro = parseInt($scope.membrecgrupo[0].findato.slice(0, 4)) - 1;
+               $scope.gxis = "Membro ĝis " +  finjaro;
+             }
+           }
+         }, errorService.error);
+       });
+       //function filterMembrcgrupoj(grupo)
      }, errorService.error);
   }
 

@@ -5,8 +5,6 @@ app.service('errorService', function($window, auth) {
       auth.elsaluti();
     } else {
       console.log(error);
-      window.alert("Okazis ne atendita eraro dum kiam vi provis fari tion."+
-                   " Erarkodo: " + error.status);
       $window.location.reload();
     }
   }
