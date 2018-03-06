@@ -89,4 +89,8 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
     }
   }
 
+  $scope.encodeJson = function(data) {
+    return JSON.stringify(data);
+  }
+
 });

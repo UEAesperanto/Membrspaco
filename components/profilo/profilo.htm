@@ -47,6 +47,11 @@
           ekde {{grupo.komencdato}} ĝis {{grupo.findato || "dumvive"}}
       </li>
     </ul>
+    <br>
+    <a href="data:application/json;charset=utf-8,{{encodeJson(uzanto)}}"
+       download="{{uzanto.id}}.json">
+        <i class="fa fa-download" aria-hidden="true"></i> Elŝuti datenojn pri mi en Datumbazo de UEA
+    </a>
   </div>
   <div class="col-md-8">
     <h2>Pri vi: </h2>
