@@ -1,3 +1,31 @@
 <div class="enhavo" data-ng-init="init()">
-  <h1>Oiifdsfsflkdi</h1>
+  <h1>Kontaktu la stabanojn de UEA:</h1>
+
+  <div class="form-group">
+    Tipo de stabano:
+    <select ng-change="getAnoj()"
+            class="form-control"
+            ng-model="laborgrupo"
+            ng-options="(l.nomo) for l in laborgrupoj |
+                        orderBy:'nomo'">
+    </select>
+  </div>
+
+  <b>Priskribo pri la elektita laborgrupo: </b> {{laborgrupo.priskribo}}
+
+  <h2>{{laborgrupo.nomo}}: </h2>
+  <p> {{anoj.length || 0}} ano(j) trovita(j)</p>
+  <div ng-repeat="ano in anoj">
+    <div class="col-sm-3 anonco ">
+        <h4>{{ano.titolo}} {{ano.personanomo}} <b>{{ano.familianomo}}</b></h4>
+        <b>Lando:</b> {{ano.radikoEo}}{{ano.finajxoEo}}
+        <br>
+        <span>
+          <button href="mailto:{{ano.retposxto}}"
+                  class="btn btn-default col-md-6">Mesaĝi</button>
+          <button class="btn btn-default col-md-6"
+                  style="margin-left: 1px;">Vidi detalojn</button>
+        </span>
+      </div>
+  </div>
 </div>
