@@ -48,10 +48,22 @@
       </li>
     </ul>
     <br>
-    <a href="data:application/json;charset=utf-8,{{encodeJson(uzanto)}}"
-       download="{{uzanto.id}}.json">
-        <i class="fa fa-download" aria-hidden="true"></i> Elŝuti datenojn pri mi en Datumbazo de UEA
-    </a>
+    <h4>
+      Datumprotektado:
+    </h4>
+    <ul>
+    <li>
+      <a href="data:application/json;charset=utf-8,{{encodeJson(uzanto)}}"
+         download="{{uzanto.id}}.json">
+          <i class="fa fa-download" aria-hidden="true"></i> Elŝuti datenojn pri mi de la Datumbazo de UEA
+      </a>
+    </li>
+    <li>
+      <a onclick="window.alert('Ne preta');">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> Revizii datumprivatecpolitikon de UEA
+      </a>
+    </li>
+  </ul>
   </div>
   <div class="col-md-8">
     <h2>Pri vi: </h2>
@@ -153,36 +165,27 @@
 
 <div id="membrkarto">
   <div style="width:323px; border-style: dotted; height: 204px; padding: 10px 20px 0px 20px; border-width:1px;">
-    <div style="width:323px; padding-left:40px; padding-bottom:30px;">
+    <div style="width:323px; padding-left:40px; padding-bottom:20px;">
       <img src="content/img/logoo.png" style="width:30px;"></img>
-      <span style="font-size:15px;">UEA - Membrkarto</span>
+      <span style="font-size:15px;">UEA - Membrokarto</span>
     </div>
-    <span style="float:left;">
-      <img src="{{bildo}}" alt="profilbildo" style="width:80px;"></img>
+    <div style="padding-bottom: 20px;">
+      <span style="float:left;">
+        <img src="{{bildo}}" alt="profilbildo" style="width:80px;"></img>
+      </span>
+      <span style="width:180px; float:right;">
+        {{uzanto.titolo}} {{uzanto.personanomo}} {{uzanto.familianomo}}
+        <br>
+        UEA-kodo: {{uzanto.ueakodo}}
+        <br>
+        {{gxis}}
+        <br>
+        {{lando.radikoEo + lando.finajxoEo}}
+        <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
+      </span>
+    </div>
+    <span style="font-size:9px;">
+      Universala Esperanto-Asocio: En oficialaj rilatoj kun UN kaj UNESKO - UEA.org
     </span>
-    <span style="width:180px; float:right;">
-      {{uzanto.titolo}} {{uzanto.personanomo}} {{uzanto.familianomo}}
-      <br>
-      UEA-kodo: {{uzanto.ueakodo}}
-      <br>
-      {{gxis}}
-      <br>
-      {{lando.radikoEo + lando.finajxoEo}}
-      <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
-    </span>
-  </div>
-  <div style="width:323px; border-style: dotted; height: 204px;
-              padding: 10px 20px 0px 20px; border-width:1px; background-color:#326464 !important;
-              transform: rotate(180deg); color: white !important;">
-    <p style="font-size:30px; padding-top: 10px; color: white !important;">Membrkarto</p>
-    <img src="content/img/logoo_blanka.png" alt="profilbildo"
-         style="width:250px; padding-left: 10px; padding-top: 40px;"></img>
-
-    <p style="font-size:12px; padding-left:0px; padding-top:5px; color: white!important;">
-      En oficialaj rilatoj kun UN kaj UNESKO
-    </p>
-    <p style="font-size:12px; padding-left:0px; padding-top:5px;color: white!important;">
-      www.UEA.org
-    </p>
   </div>
 </div>

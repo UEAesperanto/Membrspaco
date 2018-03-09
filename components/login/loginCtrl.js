@@ -5,11 +5,11 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $mdDialog, $sanit
     $scope.menuo = false;
     $scope.msg = "ERARO: Ni ne havas konekton kun la servilo nun";
 
-    // if (($window.localStorage.getItem('tokenUzanto') != null) &&
-    //     ($window.localStorage.getItem('tokenUzanto') != 0)){
-    //   $window.location.href = '#!/membroj';
-    //   $window.location.reload();
-    // }
+    if (($window.localStorage.getItem('tokenUzanto') != null) &&
+        ($window.localStorage.getItem('tokenUzanto') != 0)){
+      $window.location.href = '#!/profilo';
+      $window.location.reload();
+    }
 
     $scope.url_aligxilo = config.url_aligxilo;
     $scope.msg = "Plenumu kun la informoj, kiujn vi donis dum via aliĝo.";

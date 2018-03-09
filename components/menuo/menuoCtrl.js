@@ -1,13 +1,14 @@
- app.controller("menuoCtrl", function ($scope, $rootScope, $window,
+ app.controller("menuoCtrl", function ($scope, $rootScope, $window, $sanitize,
                                        errorService, config, auth) {
 
   $scope.init = function() {
     $scope.uzanto = JSON.parse($window.localStorage.getItem('uzanto'));
     $scope.menueroj = [{
-      nomo: "Funkcio",
-      ligilo: "x"
+      nomo: "<i class='fa fa-address-card'></i> Kontaktreto",
+      klarigo: "Kontaktinformo de delegitoj, estraranoj, kaj aliaj stabanoj de UEA",
+      klarigi: false,
+      ligilo: "#!/kontaktreto"
     }];
-
   }
 
   $scope.elsaluti = function() {
