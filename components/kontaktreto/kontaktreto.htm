@@ -15,17 +15,82 @@
 
   <h2>{{laborgrupo.nomo}}: </h2>
   <p> {{anoj.length || 0}} ano(j) trovita(j)</p>
-  <div ng-repeat="ano in anoj">
-    <div class="col-sm-3 anonco ">
-        <h4>{{ano.titolo}} {{ano.personanomo}} <b>{{ano.familianomo}}</b></h4>
-        <b>Lando:</b> {{ano.radikoEo}}{{ano.finajxoEo}}
+  <div class="input-group col-md-12">
+    <label>Serĉi (laŭ nomo aŭ lando):</label>
+    <input ng-model="searchText" class="form-control col-md-9">
+  </div>
+  <span ng-repeat="ano in anoj | filter:searchText">
+    <div class="col-md-3 anonco"  ng-init="ano = ligiAno(ano)">
+        <h4>{{ano.titolo}} {{ano.nomo}}</b></h4>
+        <b>Lando:</b> {{ano.lando}}
         <br>
-        <span>
-          <button href="mailto:{{ano.retposxto}}"
-                  class="btn btn-default col-md-6">Mesaĝi</button>
-          <button class="btn btn-default col-md-6"
-                  style="margin-left: 1px;">Vidi detalojn</button>
+        <div class="input-group" style="margin-top:10px">
+          <span class="input-group-btn">
+            <a href='mailto:{{ano.retposxto}}' class="btn btn-default">
+              Mesaĝi
+            </a>
+          </span>
+          <span class="input-group-btn">
+            <button class="btn btn-default"
+                     ng-click="montriDetalojn($event, ano)">
+              Vidi detalojn
+            </button>
+          </span>
+        </div>
+    </div>
+  </span>
+</div>
+
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="detaloj">
+    <md-dialog flex>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>Vidante detalojn por: {{elektitaAno.titolo}} {{elektitaAno.nomo}}</h2>
+          <span flex></span>
+          <a href="" ng-click="cancel()">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+          </a>
+        </div>
+      </md-toolbar>
+      <div>
+        <span class="col-md-9">
+          <h3>Profilbildo:</h3>
+          <img src="{{bildo}}" alt="profilbildo" class="profilbildo"></img>
+        </span>
+        <span class="col-md-5">
+          <h3>Bazaj informoj:</h3>
+          <p>
+            <b>Retadreso:</b> {{elektitaAno.retposxto}}
+          </p>
+          <p ng-if="elektitaAno.telhejmo">
+            <b>Hejmtelefono:</b> +{{landInformoj.callingCodes[0]}} {{elektitaAno.telhejmo}}
+          </p>
+          <p ng-if="elektitaAno.teloficejo">
+            <b>Oficejtelefono:</b> +{{landInformoj.callingCodes[0]}} {{elektitaAno.teloficejo}}
+          </p>
+          <p ng-if="elektitaAno.telportebla">
+            <b>Poŝtelefono:</b> +{{landInformoj.callingCodes[0]}} {{elektitaAno.telportebla}}
+          </p>
+          <p ng-if="elektitaAno.tttpagxo">
+            <b>TTT-paĝo:</b>
+            <a href="{{elektitaAno.tttpagxo}}" target="_blank"  class="link">
+                {{elektitaAno.tttpagxo}}
+            </a>
+          </p>
+          <br>
+          <p>
+            <b>Adreso:</b> {{elektitaAno.adreso}}
+          </p>
+          <p>
+            <b>Poŝtkodo:</b> {{elektitaAno.posxtkodo}}
+          </p>
+          <p>
+            <b>Lando:</b> {{elektitaAno.lando}}
+            <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
+          </p>
         </span>
       </div>
+    </md-dialog>
   </div>
 </div>

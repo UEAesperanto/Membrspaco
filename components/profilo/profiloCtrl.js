@@ -20,7 +20,7 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
 
     $scope.titoloj = ["S-ro", "S-rino", "D-ro",
                       "D-rino", "Profesoro", "Profesorino",
-                      "Magistro", "Magistrino", "Pastro", "Pastrino", "alia"];
+                      "Magistro", "Magistrino", "Pastro", "Pastrino", "Alia"];
 
     profiloService.elsxutiBildon($scope.unuaUzanto.id).then(
       function(response) {
