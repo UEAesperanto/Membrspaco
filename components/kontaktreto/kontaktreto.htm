@@ -1,52 +1,31 @@
 <div class="enhavo" data-ng-init="init()">
-  <h1>Kontaktu la stabanojn de UEA:</h1>
-
-  <div class="form-group">
-    Tipo de stabano:
-    <select ng-change="getAnoj()"
-            class="form-control"
-            ng-model="laborgrupo"
-            ng-options="(l.nomo) for l in laborgrupoj |
-                        orderBy:'nomo'">
-    </select>
-  </div>
-
-  <b>Priskribo pri la elektita laborgrupo: </b> {{laborgrupo.priskribo}}
-
-  <h2>{{laborgrupo.nomo}}: </h2>
-  <p> {{anoj.length || 0}} ano(j) trovita(j)</p>
-  <div class="input-group col-md-12">
-    <label>Serĉi (laŭ nomo aŭ lando):</label>
-    <input ng-model="searchText" class="form-control col-md-9">
-  </div>
-  <span ng-repeat="ano in anoj | filter:searchText">
-    <div class="col-md-3 anonco"  ng-init="ano = ligiAno(ano)">
-        <h4>{{ano.titolo}} {{ano.nomo}}</b></h4>
-        <b>Lando:</b> {{ano.lando}}
-        <br>
-        <div class="input-group" style="margin-top:10px">
-          <span class="input-group-btn">
-            <a href='mailto:{{ano.retposxto}}' class="btn btn-default">
-              Mesaĝi
-            </a>
-          </span>
-          <span class="input-group-btn">
-            <button class="btn btn-default"
-                     ng-click="montriDetalojn($event, ano)">
-              Vidi detalojn
-            </button>
-          </span>
-        </div>
-    </div>
-  </span>
+<md-subheader class="md-no-sticky">Adresaro</md-subheader>
+<label>Serĉi:
+  <input class="form-control" ng-model="filtrilo">
+</label>
+<md-list class="fixedRows">
+  <md-list-item ng-repeat="persono in anoj | filter: filtrilo as query"
+                ng-click="montriDetalojn($event, persono)"
+                class="md-3-line col-md-6" >
+    <img alt="{{ persono.name }}" src="content/img/profilo.png" class="md-avatar" />
+     <div class="md-list-item-text" layout="column">
+        <h3>{{persono.titolo}} {{persono.personanomo}} <b>{{persono.familianomo}}</b></h3>
+        <h4> {{persono.urbo}} - {{landoj[persono.idLando].radikoEo}}</h4>
+        <h4>{{laborgrupoj[persono.idGrupo].nomo}}</h4>
+     </div>
+  </md-list-item>
+</md-list>
 </div>
 
 <div style="visibility: hidden">
   <div class="md-dialog-container" id="detaloj">
-    <md-dialog flex>
+    <md-dialog layout-padding>
       <md-toolbar>
         <div class="md-toolbar-tools">
-          <h2>Vidante detalojn por: {{elektitaAno.titolo}} {{elektitaAno.nomo}}</h2>
+          <h2>
+            Vidante detalojn por: {{elektitaAno.titolo}}
+            {{elektitaAno.personanomo}} {{elektitaAno.familianomo}} &nbsp&nbsp
+          </h2>
           <span flex></span>
           <a href="" ng-click="cancel()">
             <i class="fa fa-window-close" aria-hidden="true"></i>
@@ -54,13 +33,9 @@
         </div>
       </md-toolbar>
       <div>
-        <span class="col-md-9">
-          <h3>Profilbildo:</h3>
-          <img src="{{bildo}}" alt="profilbildo" class="profilbildo"></img>
-        </span>
-        <span class="col-md-5">
+        <span>
           <h3>Bazaj informoj:</h3>
-          <p>
+          <p ng-if="elektitaAno.retposxto">
             <b>Retadreso:</b> {{elektitaAno.retposxto}}
           </p>
           <p ng-if="elektitaAno.telhejmo">
@@ -78,7 +53,6 @@
                 {{elektitaAno.tttpagxo}}
             </a>
           </p>
-          <br>
           <p>
             <b>Adreso:</b> {{elektitaAno.adreso}}
           </p>
@@ -86,11 +60,14 @@
             <b>Poŝtkodo:</b> {{elektitaAno.posxtkodo}}
           </p>
           <p>
-            <b>Lando:</b> {{elektitaAno.lando}}
+            <b>Urbo:</b> {{elektitaAno.urbo}}
+          </p>
+
+          <p>
+            <b>Lando:</b> {{landoj[elektitaAno.idLando].radikoEo}}
             <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
           </p>
         </span>
       </div>
     </md-dialog>
   </div>
-</div>

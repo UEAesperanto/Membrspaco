@@ -1,7 +1,29 @@
-app.controller("loginCtrl", function ($scope, $scope, $window, $mdDialog, $sanitize,
+app.controller("loginCtrl", function ($scope, $scope, $window, $routeParams,
+                                      $location, $mdDialog, $sanitize,
                                       errorService, config, loginService) {
 
   $scope.init = function() {
+    if($routeParams.message) {
+      window.alert($routeParams.message);
+    }
+
+    if($routeParams.token) {
+      //console.log()
+      $window.localStorage.setItem('tokenUzanto', $routeParams.token);
+      $window.localStorage.setItem('uzanto', JSON.stringify({'id': $routeParams.id}));
+      $window.location.href = '#!/profilo';
+    //  $window.location.reload();
+    }
+    var url = $location.$$absUrl.split("#!/");
+    var url = url[0].split("/?");
+    if((url.length == 2) && (url[1].indexOf("code") > -1)) {
+      loginService.senpasvorto(url[1]).then(function(response) {
+        console.log(response);
+      }, function(response) {
+        window.alert("Ne korekta ligilo");
+      });
+    }
+
     $scope.menuo = false;
     $scope.msg = "ERARO: Ni ne havas konekton kun la servilo nun";
 
@@ -12,7 +34,29 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $mdDialog, $sanit
     }
 
     $scope.url_aligxilo = config.url_aligxilo;
-    $scope.msg = "Plenumu kun la informoj, kiujn vi donis dum via aliĝo.";
+    $scope.msg = "Ensalutu per via salutvorto kaj pasvorto:";
+  }
+
+  $scope.ensalutiRetadreso = function() {
+     var webAuth = new auth0.WebAuth({
+          domain: config.auth0Domain,
+          clientID: config.auth0clientID,
+          responseType: 'code',
+          redirectUri: config.api_url + '/uzantoj/ensaluti/senpasvorto',
+          scope: 'openid profile'
+      });
+      webAuth.passwordlessStart({
+        connection: 'email',
+        send: 'link',
+        email: $scope.retadreso,
+      }, function (err,res) {
+          if(err) {
+            console.log(err);
+            window.alert("Okazis eraro! Bonvole provu alian eblon ensaluti!");
+          } else {
+            window.alert("Ligilo estis sendita al via retadreso");
+          }
+      });
   }
 
   $scope.ensaluti = function() {
@@ -48,7 +92,6 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $mdDialog, $sanit
       loginService.forgesis($scope.uzanto).then(function(response){
         window.alert("Nova pasvorto sendita al via retpoŝto");
         $window.location.reload();
-        console.log(response);
       }, function (response) {
         $scope.err = response.data.message;
         console.log(response);

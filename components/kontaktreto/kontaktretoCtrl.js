@@ -1,14 +1,6 @@
 app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDialog,
                                             profiloService, kontaktretoService, landojService,
                                             errorService, config, auth) {
-
-   $scope.getAnoj = function() {
-      kontaktretoService.getAnoj($scope.laborgrupo.id).then(
-        function(response) {
-          $scope.anoj = response.data;
-        }, errorService.error);
-    }
-
     $scope.init = function() {
         auth.ensalutita();
         $rootScope.menuo = true;
@@ -16,17 +8,40 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
         config.getConfig("idLaborgrupo").then(function(response) {
           $scope.idLaborgrupo = response.data.idLaborgrupo;
           profiloService.getGrupKat($scope.idLaborgrupo).then(function(response) {
-            $scope.laborgrupoj = response.data;
-            $scope.laborgrupo = response.data[0];
-            $scope.getAnoj();
+          var laborgrupoj = response.data;
+          $scope.anoj = [];
+            for (var i = 0; i < laborgrupoj.length; i++) {
+              kontaktretoService.getAnoj(laborgrupoj[i].id).then(
+                function(response) {
+                  $scope.anoj.push.apply($scope.anoj, response.data);
+                }, errorService.error);
+            }
+            $scope.laborgrupoj = {};
+            response.data.map(function(e){$scope.laborgrupoj[e.id] = e})
           }, errorService.error);
         });
+        console.log($scope.anoj);
+
+        landojService.getLandoj().then(function(response){
+          $scope.landoj = [];
+          response.data.map(function(e){$scope.landoj[e.id] = e});
+        });
+    }
+
+    $scope.getImg = function(id) {
+      profiloService.elsxutiBildon(id).then(
+        function(response) {
+          return response.data;
+        },
+        function(err) {
+          return 'content/img/profilo.png'
+      });
     }
 
     $scope.montriDetalojn = function(ev, ano) {
       $scope.elektitaAno = ano;
 
-      landojService.getInfoPriLanda(ano.landkodo).then(function(response) {
+      landojService.getInfoPriLanda($scope.landoj[ano.idLando].landkodo).then(function(response) {
         $scope.landInformoj = response.data;
       }, errorService.error);
 

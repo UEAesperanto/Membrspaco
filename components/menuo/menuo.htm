@@ -7,20 +7,12 @@
        </p>
     </div>
     <a class="closebtn" onclick="closeNav()"> &times; </a>
-    <span ng-repeat="menuero in menueroj">
+    <span ng-repeat="menuero in menueroj" class="menuero">
       <a href="{{menuero.ligilo}}"
-         class="menuero"
-         ng-bind-html="menuero.nomo"
-         ng-mouseover="menuero.klarigi = true"
-         ng-mouseout="menuero.klarigi = false"></a>
-
-      <div class="klarigo"
-           ng-if="menuero.klarigo"
-           ng-show = "menuero.klarigi"
-           ng-attr-id="{{menuero.id}}">
-           <b><i class="fa fa-question-circle"></i> Klarigeto: </b>
-           {{menuero.klarigo}}
-      </div>
+         ng-bind-html="menuero.nomo">
+      </a>
+      <i class="fa fa-question-circle"
+         title="{{menuero.klarigo}}"></i>
     </span>
   </span>
   </div>

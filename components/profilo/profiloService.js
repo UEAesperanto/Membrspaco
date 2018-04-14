@@ -1,4 +1,4 @@
-app.service('profiloService', function ($http, $window, Upload, config) {
+ app.service('profiloService', function ($http, $window, Upload, config) {
     var service = this;
 
     service.getUzanto = getUzanto;

@@ -2,7 +2,7 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
                                         auth, profiloService, errorService,
                                         landojService, config) {
   $scope.init = function() {
-    auth.ensalutita();
+    //auth.ensalutita();
     $rootScope.menuo = true;
     $scope.unuaUzanto = JSON.parse($window.localStorage.getItem('uzanto'));
 
@@ -31,32 +31,48 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
      });
 
      profiloService.getGrupoj($scope.unuaUzanto.id).then(function(response) {
-       $scope.grupoj = response.data.filter(function(grupo){
-          return grupo.aprobita == 1;
-        });
-       for (var i = 0; i < $scope.grupoj.length; i++) {
-         $scope.grupoj[i].komencdato = $scope.grupoj[i].komencdato.slice(0,10);
-         if($scope.grupoj[i].findato)
-             $scope.grupoj[i].findato = $scope.grupoj[i].findato.slice(0,10);
-       }
+       $scope.grupoj = {};
+       response.data.map(function (elem) {
+         elem.komencdato = elem.komencdato.slice(0,10);
+         if (elem.findato) {
+           elem.findato = elem.findato.slice(0,10);
+         }
+         if (!$scope.grupoj[elem.id]) {
+           if(elem.idFaktemo) {
+             elem.faktemoj = [];
+             elem.faktemoj.push(elem.idFaktemo);
+           }
+           $scope.grupoj[elem.id] = elem;
+          } else {
+            if(elem.idFaktemo) {
+              $scope.grupoj[elem.id].faktemoj.push(elem.idFaktemo);
+            }
+           }
+         });
+     }, errorService.error);
+
        config.getConfig("idMembrecgrupo").then(function(response) {
          $scope.idMembrecgrupo = response.data.idMembrecgrupo;
          profiloService.getGrupKat($scope.idMembrecgrupo).then(function(response){
-           $scope.membrecgrupo  = $scope.grupoj.slice().filter(function(grupo){
-             return response.data.map(function(e){return e.id;}).indexOf(grupo.idGrupo) > -1;
+           var membrArr = response.data.map(function(elem) {return elem.id})
+           $scope.membrecgrupo  = {};
+           Object.keys($scope.grupoj).forEach(function(key,index) {
+             if(membrArr.indexOf($scope.grupoj[key].idGrupo) > -1) {
+               if (($scope.grupoj[key].findato == null) || (new Date($scope.grupoj[key].findato) > new Date())) {
+                 $scope.membrecgrupo = $scope.grupoj[key];
+               }
+             }
            });
-           if($scope.membrecgrupo.length > 0) {
-             if($scope.membrecgrupo[0].findato == null) {
+           if($scope.membrecgrupo) {
+             if($scope.membrecgrupo.findato == null) {
                $scope.gxis = "Dumviva membro";
              } else {
-               var finjaro = parseInt($scope.membrecgrupo[0].findato.slice(0, 4)) - 1;
+               var finjaro = parseInt($scope.membrecgrupo.findato.slice(0, 4)) - 1;
                $scope.gxis = "Membro ĝis " +  finjaro;
              }
            }
-         }, errorService.error);
-       });
-       //function filterMembrcgrupoj(grupo)
-     }, errorService.error);
+          }, errorService.error);
+        }, errorService.error);
   }
 
   $scope.upload = function() {
@@ -69,24 +85,10 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
 
   $scope.updateUzanto = function(valoro, kampo) {
     var data = {valoro: valoro, kampo: kampo};
-    if(kampo == 'retposxto') {
-      var data2 = {valoro: valoro, kampo: "uzantnomo"};
-      profiloService.updateUzanto($scope.unuaUzanto.id, data2).then(
-        function(response){
-          profiloService.updateUzanto($scope.unuaUzanto.id, data).then(
-            function(sucess){
-              $window.location.reload();
-            }, errorService.error);
-        }, function(response) {
-          window.alert("La retadreso verŝajne jam estas uzata de alia uzanto");
-          $window.location.reload();
-        });
-      } else {
-        profiloService.updateUzanto($scope.unuaUzanto.id, data).then(
-          function(sucess){
-            $window.location.reload();
-        }, errorService.error);
-    }
+    profiloService.updateUzanto($scope.unuaUzanto.id, data).then(
+      function(sucess){
+        $window.location.reload();
+    }, errorService.error);
   }
 
   $scope.encodeJson = function(data) {

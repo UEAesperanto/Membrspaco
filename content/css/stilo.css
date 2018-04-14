@@ -1,9 +1,6 @@
 html, body, .ng-scope {
   font-family: 'Montserrat' !important;
-  width: 100%;
-  margin: 0px;
-  padding: 0px;
-  overflow-x: hidden;
+  background-color: #fafafa;
 }
 
 h2 {
@@ -45,8 +42,8 @@ h2 {
   background-color: #F1F3F7;
   border-radius: 4px;
   padding: 15px;
-  width:  450px;
-  margin-left: 30%;
+  width:  80%;
+  margin-left: 10%;
 }
 
 .form a {
@@ -57,8 +54,8 @@ h2 {
   background-color: #326464;
   border-radius: 4px;
   padding: 15px;
-  width:  450px;
-  margin-left: 30%;
+  width:  80%;
+  margin-left: 10%;
 }
 
 .membrigxi a {
@@ -66,9 +63,8 @@ h2 {
 }
 
 .logoo {
-  margin-top:4%;
-  margin-left:10%;
-  /* display:inline-block; */
+  margin-top:10px;
+  margin-left:15%;
   float: left;
   margin-right:7px;
   width: 50px;
@@ -76,8 +72,7 @@ h2 {
 
 /*titolo de la retejo - fonto*/
 .titolo h1 {
-  /* margin-top:7%; */
-  /* position: relative; */
+  margin-top:40px;
   font-size: 17px;
   color:black;
 }
@@ -110,11 +105,12 @@ h2 {
 }
 
 .menuero, .menuero:focus, menuero:active, menuero:hover {
-    padding: 5px 5px 5px 32px;
+    padding: 5px 0px 5px 32px;
     font-size: 15px;
     outline: none;
     display: block;
     transition: 0.3s;
+    background-color: #326464;
 }
 
 a {
@@ -246,19 +242,19 @@ md-input-container.md-block {
 #membrkarto {
   visibility: hidden;
   position: absolute;
-  left: -999em;
+  left: 250px;
 }
 
 @media print {
   body * {
     visibility: hidden;
-    color-adjust: exact;
+    color-adjust: exact !important;
     -webkit-print-color-adjust: exact !important;
   }
   #membrkarto, #membrkarto * {
     visibility: visible;
     overflow: visible !important;
-    color-adjust: exact;
+    color-adjust: exact !important;;
     -webkit-print-color-adjust: exact !important;
   }
   #membrkarto {

@@ -4,8 +4,14 @@
   $scope.init = function() {
     $scope.uzanto = JSON.parse($window.localStorage.getItem('uzanto'));
     $scope.menueroj = [{
-      nomo: "<i class='fa fa-address-card'></i> Kontaktreto",
+      nomo: "<i class='fa fa-address-card'></i> Adresaro",
       klarigo: "Kontaktinformo de delegitoj, estraranoj, kaj aliaj stabanoj de UEA",
+      klarigi: false,
+      ligilo: "#!/kontaktreto"
+    },
+    {
+      nomo: "<i class='fa fa-book'></i> Teko",
+      klarigo: "Elŝutu revuojn kaj aliajn materialojn",
       klarigi: false,
       ligilo: "#!/kontaktreto"
     }];
