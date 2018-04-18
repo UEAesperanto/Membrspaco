@@ -6,7 +6,6 @@
     $scope.menueroj = [{
       nomo: "<i class='fa fa-address-card'></i> Adresaro",
       klarigo: "Kontaktinformo de delegitoj, estraranoj, kaj aliaj stabanoj de UEA",
-      klarigi: false,
       ligilo: "#!/kontaktreto"
     },
     {
@@ -14,6 +13,11 @@
       klarigo: "Elŝutu revuojn kaj aliajn materialojn",
       klarigi: false,
       ligilo: "#!/kontaktreto"
+    },
+    {
+      nomo: "<i class='fa fa-globe'></i> Lokaj Asocioj kaj Grupoj",
+      klarigo: "Trovu lokajn asociojn kaj grupojn ligitajn al UEA",
+      ligilo: "#!/asocioj"
     }];
   }
 

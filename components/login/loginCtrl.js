@@ -3,6 +3,8 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $routeParams,
                                       errorService, config, loginService) {
 
   $scope.init = function() {
+    $scope.menuo = false;
+
     if($routeParams.message) {
       window.alert($routeParams.message);
     }
@@ -24,7 +26,6 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $routeParams,
       });
     }
 
-    $scope.menuo = false;
     $scope.msg = "ERARO: Ni ne havas konekton kun la servilo nun";
 
     if (($window.localStorage.getItem('tokenUzanto') != null) &&

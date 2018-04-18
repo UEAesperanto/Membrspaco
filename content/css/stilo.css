@@ -26,8 +26,8 @@ h2 {
 .nav-logoo {
   width:250px;
   height:100px;
-  margin-left: 10px;
-  margin-top: 0px;
+  margin-left: 25px;
+  margin-top: 5px;
 }
 
 .nav-logoo img {
@@ -96,7 +96,7 @@ h2 {
     z-index: 2;
     top: 0;
     left: 0;
-    width: 250px;
+    width:280px;
     background-color: #326464;
     overflow-x: hidden;
     transition: 0.5s;
@@ -224,7 +224,7 @@ md-input-container.md-block {
 
 .enhavo {
   padding-top: 50px;
-  padding-left: 280px;
+  padding-left: 310px;
   z-index: -1;
 }
 

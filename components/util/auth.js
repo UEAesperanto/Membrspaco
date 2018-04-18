@@ -3,6 +3,7 @@ app.service('auth', function($window) {
       if (($window.localStorage.getItem('tokenUzanto') == null) ||
           ($window.localStorage.getItem('tokenUzanto') == 0)) {
         $window.location.href = '#!/login';
+        $widow.location.reload();
       }
   }
 

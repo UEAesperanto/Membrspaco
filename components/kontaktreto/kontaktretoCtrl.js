@@ -13,14 +13,28 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
             for (var i = 0; i < laborgrupoj.length; i++) {
               kontaktretoService.getAnoj(laborgrupoj[i].id).then(
                 function(response) {
-                  $scope.anoj.push.apply($scope.anoj, response.data);
-                }, errorService.error);
+                  for (var j = 0; j < response.data.length; j++) {
+                    var index = $scope.anoj.findIndex((item) => item.id == response.data[j].id);
+                    if (index == -1) {
+                      response.data[j].grupoj_obj = [response.data[j]];
+                      response.data[j].grupoj = [response.data[j].idGrupo];
+                      $scope.anoj.push(response.data[j]);
+                    } else {
+                      $scope.anoj[index].grupoj_obj.push(response.data[j]);
+                      $scope.anoj[index].grupoj.push(response.data[j].idGrupo);
+                    }
+                  }
+                });
             }
             $scope.laborgrupoj = {};
             response.data.map(function(e){$scope.laborgrupoj[e.id] = e})
           }, errorService.error);
         });
-        console.log($scope.anoj);
+
+        kontaktretoService.getFakoj().then(function(response){
+          $scope.fakoj = [];
+          response.data.map(function(e){$scope.fakoj[e.id] = e});
+        });
 
         landojService.getLandoj().then(function(response){
           $scope.landoj = [];
@@ -38,6 +52,35 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
       });
     }
 
+    $scope.lauxfako = function(ano){
+      if((!$scope.fakoSelected) || ($scope.fakoSelected == '')){
+        return true;
+      }else {
+        for(var i = 0; i < ano.grupoj_obj.length; i++) {
+          if(ano.grupoj_obj[i].idFaktemo == $scope.fakoSelected) {
+            return true;
+          }
+        }
+        return false;
+      }
+    }
+
+    $scope.filterKategorio = function(ano) {
+      if((!$scope.kategorioj) || ($scope.kategorioj == '')){
+        return true;
+      } else {
+        return (ano.grupoj.indexOf($scope.kategorioj) > -1);
+      }
+    }
+
+    $scope.filterLandoj = function(ano){
+      if((!$scope.landoSelect) || ($scope.landoSelect == '')){
+        return true;
+      } else {
+        return (ano.idLando == $scope.landoSelect);
+      }
+    }
+
     $scope.montriDetalojn = function(ev, ano) {
       $scope.elektitaAno = ano;
 
@@ -45,9 +88,14 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
         $scope.landInformoj = response.data;
       }, errorService.error);
 
-      profiloService.elsxutiBildon(ano.idAno).then(
+      profiloService.elsxutiBildon(ano.id).then(
         function(response) {
-          $scope.bildo = response.data;
+          console.log(response.data);
+          if(response.data == "No file found"){
+            $scope.bildo = 'content/img/profilo.png'
+          } else {
+            $scope.bildo = response.data;
+          }
         },
         function(err) {
           $scope.bildo = 'content/img/profilo.png'
@@ -65,10 +113,19 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
        $mdDialog.cancel();
      };
 
-    $scope.ligiAno = function(ano) {
-      ano.nomo = ano.personanomo + " " + ano.familianomo.toUpperCase();
-      ano.lando = ano.radikoEo + ano.finajxoEo;
-      return ano;
-    }
+     $scope.sercxi = function(ano) {
+      if(!$scope.filtrilo)
+        return true;
+      else {
+        var compare = $scope.filtrilo.toLowerCase();
+        if((ano.personanomo.toLowerCase().indexOf(compare) > -1) ||
+                (ano.familianomo.toLowerCase().indexOf(compare) > -1) ||
+                (ano.urbo.toLowerCase().indexOf(compare) > -1)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+     }
 
 });
