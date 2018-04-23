@@ -12,7 +12,7 @@
       nomo: "<i class='fa fa-book'></i> Teko",
       klarigo: "Elŝutu revuojn kaj aliajn materialojn",
       klarigi: false,
-      ligilo: "#!/kontaktreto"
+      ligilo: "#!/teko"
     },
     {
       nomo: "<i class='fa fa-globe'></i> Lokaj Asocioj kaj Grupoj",

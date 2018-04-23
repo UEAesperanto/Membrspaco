@@ -90,7 +90,6 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
 
       profiloService.elsxutiBildon(ano.id).then(
         function(response) {
-          console.log(response.data);
           if(response.data == "No file found"){
             $scope.bildo = 'content/img/profilo.png'
           } else {

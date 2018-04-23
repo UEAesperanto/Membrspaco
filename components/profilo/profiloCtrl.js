@@ -2,7 +2,7 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
                                         auth, profiloService, errorService,
                                         landojService, config) {
   $scope.init = function() {
-    //auth.ensalutita();
+    auth.ensalutita();
     $rootScope.menuo = true;
     $scope.unuaUzanto = JSON.parse($window.localStorage.getItem('uzanto'));
 

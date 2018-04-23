@@ -16,8 +16,15 @@ h2 {
   display: block;
 }
 
+.md-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding-top: 10px;
+}
+
 .menutitolo {
-  cursor:pointer;
+  cursor: pointer;
   color: white;
   font-size: 17px;
   padding-left: 5px;
