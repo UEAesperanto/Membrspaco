@@ -1,47 +1,55 @@
 <div class="enhavo" data-ng-init="init()">
   <h1>Adresaro de UEA</h1>
-  <div class="form-group">
-    <label>Serĉi:</label>
-    <input class="form-control" ng-model="filtrilo"
-           placeholder="Nomo, urbo ...">
-  </div>
-  <form class="form-inline">
+  <form class="form-inline" ng-submit="filtri()">
     <div class="form-group">
-      <label>en kategorio: </label>
-      <select class="form-control" ng-model="kategorioj">
-        <option value="">Ĉiuj</option>
-        <option ng-repeat="laborgrupo in laborgrupoj" ng-value="laborgrupo.id">
-          {{laborgrupo.nomo}}
-        </option>
-      </select>
+      <label>Serĉi:</label>
+      <input class="form-control" ng-model="filtrilo"
+             placeholder="Nomo, urbo ...">
     </div>
-    <div class="form-group">
-      <label>laŭ lando: </label>
-      <select class="form-control" ng-model="landoSelect">
-        <option value="" selected>Ĉiuj</option>
-        <option ng-repeat="lando in landoj | localeOrderBy:'radikoEo'"
-                ng-value="lando.id">
-          {{lando.radikoEo}}
-        </option>
-      </select>
-    </div>
+    <div ng-show="afiltriloj">
+      <div class="form-group">
+        <label>en kategorio: </label>
+        <select class="form-control" ng-model="kategorioj">
+          <option value="">Ĉiuj</option>
+          <option ng-repeat="laborgrupo in laborgrupoj" ng-value="laborgrupo.id">
+            {{laborgrupo.nomo}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>laŭ lando: </label>
+        <select class="form-control" ng-model="landoSelect">
+          <option value="" selected>Ĉiuj</option>
+          <option ng-repeat="lando in landoj | localeOrderBy:'radikoEo'"
+                  ng-value="lando.id">
+            {{lando.radikoEo}}
+          </option>
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label>laŭ fako: </label>
-      <select class="form-control" ng-model="fakoSelected">
-        <option value="">Ĉiuj</option>
-        <option ng-repeat="fako in fakoj | orderBy: 'nomo' | filter: ignoreAccents"
-                ng-value="fako.id">
-          {{fako.nomo}}
-        </option>
-      </select>
+      <div class="form-group">
+        <label>laŭ fako: </label>
+        <select class="form-control" ng-model="fakoSelected">
+          <option value="">Ĉiuj</option>
+          <option ng-repeat="fako in fakoj | localeOrderBy: 'nomo'"
+                  ng-value="fako.id">
+            {{fako.nomo}}
+          </option>
+        </select>
+      </div>
     </div>
+    <button type="submit" class="btn btn-default">Serĉi</button>
+    <button class="btn btn-basic" ng-show="!afiltriloj"  ng-click="afiltriloj = !afiltriloj">
+      Montri aldonajn filtrilojn
+    </button>
+    <button class="btn btn-basic" ng-show="afiltriloj"  ng-click="afiltriloj = !afiltriloj">
+      Kaŝi aldonajn filtrilojn
+    </button>
   </form>
 
   <div class='md-padding' layout="row" layout-wrap>
         <md-card class="col-md-5" md-theme-watch
-                ng-repeat="persono in anoj | orderBy: 'familianomo' | filter: filterLandoj
-                          | filter: filterKategorio  | filter:ignoreAccents | filter: lauxfako | filter: sercxi">
+                ng-repeat="persono in montreblajAnoj | limitTo: limit">
            <md-card-title>
              <md-card-title-text>
                 <span class="md-headline">
@@ -75,6 +83,9 @@
       </md-card>
     </div>
   </md-content>
+  <button type="button" class="btn btn-basic btn-block" ng-click="aldoni20()">
+    Ŝarĝi pliajn adresojn
+  </button>
 </div>
 </div>
 

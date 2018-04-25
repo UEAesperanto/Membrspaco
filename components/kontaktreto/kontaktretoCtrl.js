@@ -4,6 +4,8 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
     $scope.init = function() {
         auth.ensalutita();
         $rootScope.menuo = true;
+        $scope.limit = 10;
+        $scope.afiltriloj = false;
 
         config.getConfig("idLaborgrupo").then(function(response) {
           $scope.idLaborgrupo = response.data.idLaborgrupo;
@@ -25,6 +27,7 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
                     }
                   }
                 });
+              $scope.montreblajAnoj = $scope.anoj;
             }
             $scope.laborgrupoj = {};
             response.data.map(function(e){$scope.laborgrupoj[e.id] = e})
@@ -50,35 +53,6 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
         function(err) {
           return 'content/img/profilo.png'
       });
-    }
-
-    $scope.lauxfako = function(ano){
-      if((!$scope.fakoSelected) || ($scope.fakoSelected == '')){
-        return true;
-      }else {
-        for(var i = 0; i < ano.grupoj_obj.length; i++) {
-          if(ano.grupoj_obj[i].idFaktemo == $scope.fakoSelected) {
-            return true;
-          }
-        }
-        return false;
-      }
-    }
-
-    $scope.filterKategorio = function(ano) {
-      if((!$scope.kategorioj) || ($scope.kategorioj == '')){
-        return true;
-      } else {
-        return (ano.grupoj.indexOf($scope.kategorioj) > -1);
-      }
-    }
-
-    $scope.filterLandoj = function(ano){
-      if((!$scope.landoSelect) || ($scope.landoSelect == '')){
-        return true;
-      } else {
-        return (ano.idLando == $scope.landoSelect);
-      }
     }
 
     $scope.montriDetalojn = function(ev, ano) {
@@ -112,19 +86,51 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
        $mdDialog.cancel();
      };
 
-     $scope.sercxi = function(ano) {
-      if(!$scope.filtrilo)
-        return true;
-      else {
-        var compare = $scope.filtrilo.toLowerCase();
-        if((ano.personanomo.toLowerCase().indexOf(compare) > -1) ||
-                (ano.familianomo.toLowerCase().indexOf(compare) > -1) ||
-                (ano.urbo.toLowerCase().indexOf(compare) > -1)) {
-          return true;
-        } else {
-          return false;
-        }
-      }
+     $scope.aldoni20 = function(){
+       $scope.limit += 20;
      }
 
+     $scope.filtri = function() {
+       var lauxfako = function(ano){
+         for(var i = 0; i < ano.grupoj_obj.length; i++) {
+           if(ano.grupoj_obj[i].idFaktemo == $scope.fakoSelected) {
+             return true;
+           }
+         }
+         return false;
+       }
+
+       var filterKategorio = function(ano) {
+          return (ano.grupoj.indexOf($scope.kategorioj) > -1);
+       }
+
+       var filterLandoj = function(ano){
+         return (ano.idLando == $scope.landoSelect);
+       }
+
+       var sercxi = function(ano) {
+          var compare = $scope.filtrilo.toLowerCase();
+          if((ano.personanomo.toLowerCase().indexOf(compare) > -1) ||
+                  (ano.familianomo.toLowerCase().indexOf(compare) > -1) ||
+                  (ano.urbo.toLowerCase().indexOf(compare) > -1)) {
+            return true;
+          } else {
+            return false;
+          }
+       }
+       $scope.montreblajAnoj = $scope.anoj;
+
+       if($scope.filtrilo && $scope.filtrilo != '') {
+         $scope.montreblajAnoj = $scope.montreblajAnoj.filter(sercxi);
+       }
+       if(($scope.landoSelect) && ($scope.landoSelect != '')){
+         $scope.montreblajAnoj = $scope.montreblajAnoj.filter(filterLandoj);
+       }
+       if(($scope.fakoSelected) || ($scope.fakoSelected != '')){
+         $scope.montreblajAnoj = $scope.montreblajAnoj.filter(lauxfako);
+       }
+       if(($scope.kategorioj) || ($scope.kategorioj != '')){
+         $scope.montreblajAnoj = $scope.montreblajAnoj.filter(filterKategorio);
+       }
+    }
 });
