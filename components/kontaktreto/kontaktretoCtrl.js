@@ -120,17 +120,19 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
        }
        $scope.montreblajAnoj = $scope.anoj;
 
-       if($scope.filtrilo && $scope.filtrilo != '') {
+       if(($scope.filtrilo) && ($scope.filtrilo != '')) {
          $scope.montreblajAnoj = $scope.montreblajAnoj.filter(sercxi);
        }
-       if(($scope.landoSelect) && ($scope.landoSelect != '')){
+       if(($scope.landoSelect) && ($scope.landoSelect != "")){
          $scope.montreblajAnoj = $scope.montreblajAnoj.filter(filterLandoj);
        }
-       if(($scope.fakoSelected) || ($scope.fakoSelected != '')){
+       if(($scope.fakoSelected) && ($scope.fakoSelected != "")){
          $scope.montreblajAnoj = $scope.montreblajAnoj.filter(lauxfako);
        }
-       if(($scope.kategorioj) || ($scope.kategorioj != '')){
+       if(($scope.kategorioj) && ($scope.kategorioj != "")){
          $scope.montreblajAnoj = $scope.montreblajAnoj.filter(filterKategorio);
        }
+       console.log($scope.montreblajAnoj);
+
     }
 });
