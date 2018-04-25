@@ -25,6 +25,13 @@
     auth.elsaluti();
   }
 
+  $scope.cxuFermi = function() {
+     var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+     if(width < 700) {
+       document.getElementById("mySidenav").style.width = "0";
+     }
+  }
+
   window.onbeforeunload = function() {
     $window.localStorage.setItem('menuoMembroj', JSON.stringify($scope.menuoMembroj));
     $window.localStorage.setItem('menuoBazaAgordoj', JSON.stringify($scope.menuoBazaAgordoj));

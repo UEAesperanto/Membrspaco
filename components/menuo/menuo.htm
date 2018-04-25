@@ -9,7 +9,8 @@
     <a class="closebtn" onclick="closeNav()"> &times; </a>
     <span ng-repeat="menuero in menueroj" class="menuero">
       <a href="{{menuero.ligilo}}"
-         ng-bind-html="menuero.nomo">
+         ng-bind-html="menuero.nomo"
+         ng-click="cxuFermi()">
       </a>
       <i class="fa fa-question-circle"
          title="{{menuero.klarigo}}"></i>
@@ -18,7 +19,6 @@
   </div>
 
   <div class="menubar">
-
     <span class="profilo" ng-click="elsaluti()">
       <i class="fa fa-power-off" aria-hidden="true"></i> Elsaluti
     </span>
