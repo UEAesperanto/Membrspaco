@@ -1,17 +1,16 @@
-<div class="row titolo" data-ng-init="init()">
-   <div class="row">
-    <div class="col-sm-6">
-       <img src="content/img/logoo.png" class="logoo" alt="logoo"></img>
-       <h1> Universala Esperanto-Asocio - <b> Membrspaco</b></h1>
-    </div>
+<div class="row titolo">
+  <div class="col-sm-12">
+    <img src="content/img/logoo.png" class="logoo" alt="logoo"></img>
+    <h1> Universala Esperanto-Asocio - <b> Membrspaco</b></h1>
   </div>
 </div>
-<div class="container login">
+
+<div class="container login" data-ng-init="init()">
   <div class="row form">
-    <h4>{{msg}}</h4>
-    <form ng-submit="ensaluti()">
+    <form ng-submit="ensaluti()" class="col-md-6">
+      <h4>{{msg}}</h4>
         <div class="form-group">
-          <label for="uzantnomo">Retadreso:</label>
+          <label for="uzantnomo">Via salutvorto (konata de UEA):</label>
           <input type="text" class="form-control"
                  id="uzantnomo" ng-model="uzanto.uzantnomo">
         </div>
@@ -23,17 +22,47 @@
         <button type="submit" class="btn btn-default">Ensaluti</button>
         <br><br>
         <a href="" ng-click="montriDetalojn($event, '#forgesis')">
-          Mi forgesis mian pasvorton
+          <b>Mi forgesis mian pasvorton</b>
         </a>
-    </form>
+      </form>
+    <div class="col-md-6">
+      <h4>
+        Ensalutu sen pasvorto pere de via retpoŝto
+      </h4>
+      <form ng-submit="ensalutiRetadreso()">
+        <div class="form-group">
+          <label>Retadreso konata de UEA</label>
+          <input type="email" ng-model="retadreso" class="form-control" placeholder="Retadreso">
+        </div>
+        <button type="submit" class="btn btn-default mb-4">
+          Sendi ligilon
+          <img src="https://cdn.auth0.com/website/assets/pages/press/img/resources/passwordless-logo-inverted-65f0d8f046.svg" alt="aut0" width="100">
+        </button>
+      </form>
+      <br>
+      <p>
+        Ni sendos ligilon al via retadreso, kaj vi povos klaki je
+        ĝi por ensaluti, tiu nomiĝas Auth0 passwordless
+        teknologio kaj ne estas malsekura!
+      </p>
+    </div>
   </div>
-  <div class="row membrigxi">
+  <div class="row membrigxi col-md-12">
     <a ng-href="{{url_aligxilo}}" target="_blank">
       Mi ankoraŭ ne estas membro de UEA kaj deziras membriĝi
     </a>
   </div>
 </div>
-
+<div class="row" align="center">
+  Se vi ne sukcesas ensaluti pro iu ajn kialo, skribu al <b>info@uea.org</b>
+</div>
+<br>
+<div class="row" align="center">
+  Tiu sistemo estis programita de
+  <a href="https://asocio.net" target="_blank" style="color:#F7B733">
+    Asocio.net
+  </a>
+</div>
 <div style="visibility: hidden">
   <div class="md-dialog-container" id="forgesis">
     <md-dialog flex>
@@ -44,28 +73,28 @@
           <i class="fa fa-window-close" aria-hidden="true"></i>
         </a>
       </md-toolbar>
-    <md-content class="md-padding">
-      <form name="forgesis">
-        <span class="col-md-6"
-             ng-class="{'has-error': forgesis.retposxto.$touched && forgesis.retposxto.$invalid }">
-          <label for="retposxto"> Via retadreso*</label>
-          <input type="email"
-                  id="retposxto"
-                  ng-change="forgesis.retposxto.$error = {}"
-                  name="retposxto"
-                  class="form-control"
-                  ng-model="uzanto.retposxto" required>
-            <div class="help-block"
-                ng-messages="forgesis.retposxto.$error"
-                ng-show="forgesis.retposxto.$touched">
-              <div ng-messages-include="config/messages.html"></div>
+      <md-content class="md-padding">
+        <p style="color:red">{{err}}</p>
+        <form name="forgesis" ng-submit="forgesisPas()">
+          <div class="col-md-6"
+               ng-class="{'has-error': forgesis.retposxto.$touched && forgesis.retposxto.$invalid }">
+            <label for="retposxto">Retadreso: (konata de UEA)</label>
+            <input type="email"
+                    id="retposxto"
+                    ng-change="forgesis.retposxto.$error = {}"
+                    name="retposxto"
+                    class="form-control"
+                    ng-model="uzanto.retposxto" required>
+             <div class="help-block"
+                  ng-messages="forgesis.retposxto.$error"
+                  ng-show="forgesis.retposxto.$touched">
+                  <div ng-messages-include="config/messages.html"></div>
             </div>
-          </span>
-
-          <span class="col-md-6"
-               ng-class="{'has-error': forgesis.naskigxitago.$touched && forgesis.naskigxitago.$invalid }">
-            <div class="form-group">
-              <label>Naskiĝidato* (TT/MM/JJJJ)</label>
+          </div>
+          <div class="col-md-6"
+               ng-class="{'has-error': forgesis.naskigxitago.$touched && forgesis.naskigxitago.$invalid}"
+               ng-submit="forgesis()">
+              <label>Naskiĝidato* (TT/MM/JJJJ):</label>
               <input type="text"
                      name="naskigxitago"
                      class="form-control"
@@ -73,14 +102,21 @@
                      name="naskigxitago"
                      placeholder="TT/MM/JJJJ"
                      ui-mask="99/99/9999" ui-mask-placeholder required>
-                <div class="help-block"
-                     ng-messages="forgesis.naskigxitago.$error"
-                     ng-show="forgesis.naskigxitago.$touched">
-                     <div ng-messages-include="config/messages.html"></div>
-                </div>
-          </span>
-      </form>
-    </md-content>
-  </md-dialog>
- </div>
+              <div class="help-block">
+                *Tio estas por helpi konfirmi ke vi estas vi.
+              </div>
+              <div class="help-block"
+                   ng-messages="forgesis.naskigxitago.$error"
+                   ng-show="forgesis.naskigxitago.$touched">
+                  <div ng-messages-include="config/messages.html"></div>
+              </div>
+          </div>
+          <br><br><br>
+          <button type="submit" class="btn btn-default btn-block">
+            Sendi novan pasvorton al mia retadreso
+          </button>
+        </form>
+      </md-content>
+    </md-dialog>
+  </div>
 </div>

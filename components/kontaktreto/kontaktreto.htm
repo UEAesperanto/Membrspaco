@@ -1,0 +1,135 @@
+<div class="enhavo" data-ng-init="init()">
+  <h1>Adresaro de UEA</h1>
+  <div class="form-group">
+    <label>Serĉi:</label>
+    <input class="form-control" ng-model="filtrilo"
+           placeholder="Nomo, urbo ...">
+  </div>
+  <form class="form-inline">
+    <div class="form-group">
+      <label>en kategorio: </label>
+      <select class="form-control" ng-model="kategorioj">
+        <option value="">Ĉiuj</option>
+        <option ng-repeat="laborgrupo in laborgrupoj" ng-value="laborgrupo.id">
+          {{laborgrupo.nomo}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>laŭ lando: </label>
+      <select class="form-control" ng-model="landoSelect">
+        <option value="" selected>Ĉiuj</option>
+        <option ng-repeat="lando in landoj | localeOrderBy:'radikoEo'"
+                ng-value="lando.id">
+          {{lando.radikoEo}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>laŭ fako: </label>
+      <select class="form-control" ng-model="fakoSelected">
+        <option value="">Ĉiuj</option>
+        <option ng-repeat="fako in fakoj | orderBy: 'nomo' | filter: ignoreAccents"
+                ng-value="fako.id">
+          {{fako.nomo}}
+        </option>
+      </select>
+    </div>
+  </form>
+
+  <div class='md-padding' layout="row" layout-wrap>
+        <md-card class="col-md-5" md-theme-watch
+                ng-repeat="persono in anoj | orderBy: 'familianomo' | filter: filterLandoj
+                          | filter: filterKategorio  | filter:ignoreAccents | filter: lauxfako | filter: sercxi">
+           <md-card-title>
+             <md-card-title-text>
+                <span class="md-headline">
+                  {{persono.titolo}} {{persono.personanomo}}
+                <b>{{persono.familianomo}}</b></span>
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+              <h4>
+                 {{persono.urbo}} - {{landoj[persono.idLando].radikoEo}}
+              </h4>
+              <span>
+                <span ng-repeat="grupo in persono.grupoj_obj"
+                      style="float:left">
+                  {{laborgrupoj[grupo.idGrupo].nomo}}
+                  <span ng-if="grupo.idFaktemo">
+                    ({{fakoj[grupo.idFaktemo].nomo}})
+                  </span>
+                  <span ng-if="grupo.tasko">
+                    ({{grupo.tasko}})
+                  </span>
+                  <span ng-if="grupo.respondeco">
+                    ({{grupo.respondeco}})
+                  </span>; &nbsp
+                </span>
+              </span>
+            </md-card-content>
+            <md-button class="md-raised" ng-click="montriDetalojn($event, persono)">
+                Vidi detalojn
+            </md-button>
+      </md-card>
+    </div>
+  </md-content>
+</div>
+</div>
+
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="detaloj">
+    <md-dialog layout-padding>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>
+            Vidante detalojn por: {{elektitaAno.titolo}}
+            {{elektitaAno.personanomo}} {{elektitaAno.familianomo}} &nbsp&nbsp
+          </h2>
+          <span flex></span>
+          <a href="" ng-click="cancel()">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+          </a>
+        </div>
+      </md-toolbar>
+      <span>
+        <div class="col-md-12">
+          <h3>Bazaj informoj:</h3>
+          <img ng-src="{{bildo}}" alt="profilbildo" width="150" align="left" style="padding-right: 10px"></img>
+          <p ng-if="elektitaAno.retposxto">
+            <b>Retadreso:</b> {{elektitaAno.retposxto}}
+          </p>
+          <p ng-if="elektitaAno.telhejmo">
+            <b>Hejmtelefono:</b> +{{landInformoj.callingCodes[0]}} {{elektitaAno.telhejmo}}
+          </p>
+          <p ng-if="elektitaAno.teloficejo">
+            <b>Oficejtelefono:</b> +{{landInformoj.callingCodes[0]}} {{elektitaAno.teloficejo}}
+          </p>
+          <p ng-if="elektitaAno.telportebla">
+            <b>Poŝtelefono:</b> +{{landInformoj.callingCodes[0]}} {{elektitaAno.telportebla}}
+          </p>
+          <p ng-if="elektitaAno.tttpagxo">
+            <b>TTT-paĝo:</b>
+            <a href="{{elektitaAno.tttpagxo}}" target="_blank"  class="link">
+                {{elektitaAno.tttpagxo}}
+            </a>
+          </p>
+          <p>
+            <b>Adreso:</b> {{elektitaAno.adreso}}
+          </p>
+          <p>
+            <b>Poŝtkodo:</b> {{elektitaAno.posxtkodo}}
+          </p>
+          <p>
+            <b>Urbo:</b> {{elektitaAno.urbo}}
+          </p>
+
+          <p>
+            <b>Lando:</b> {{landoj[elektitaAno.idLando].radikoEo}}
+            <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>
+          </p>
+        </div>
+      </span>
+    </md-dialog>
+  </div>

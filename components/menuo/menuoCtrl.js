@@ -1,86 +1,35 @@
- app.controller("menuoCtrl", function ($scope, $rootScope, $window,
+ app.controller("menuoCtrl", function ($scope, $rootScope, $window, $sanitize,
                                        errorService, config, auth) {
 
   $scope.init = function() {
     $scope.uzanto = JSON.parse($window.localStorage.getItem('uzanto'));
-    $scope.alert = window.alert;
-
-    try {
-      $scope.menuoBazaAgordoj = JSON.parse($window.localStorage.getItem('menuoBazaAgordoj'));
-      $scope.menuoMembroj = JSON.parse($window.localStorage.getItem('menuoMembroj'));
-    } catch(err) {
-      $scope.menuoBazaAgordoj =
-      [
-        {
-          titolo: "Bazaj agordoj",
-          montri: false
-        },
-        {
-          link: "#!/admin",
-          titolo: "Administrantoj"
-        },
-        {
-          link: "#!/landoj",
-          titolo: "Landoj"
-        },
-        {
-          link: "#!/perantoj",
-          titolo: "Perantoj"
-        },
-        {
-          link:"#!/membrecoj",
-          titolo:"Kategorioj kaj kotizoj"
-        },
-        {
-          link: "#!/laborgrupoj",
-          titolo: "Laborgrupoj"
-        }
-      ];
-
-      $scope.menuoMembroj =
-      [
-        {
-          titolo: "Membroj",
-          montri: true
-        },
-        {
-          link: "#!/membroj",
-          titolo: "Membroj",
-          ngClass: "selektita"
-        },
-        {
-          link: "#!/membrecpetoj",
-          titolo: "Membrecpetoj"
-        }
-      ];
-    }
-
-    $scope.menueroj = [];
-    config.getConfig("idAdministranto").then(function(response){
-      if($scope.uzanto.permesoj.indexOf(response.data.idAdministranto) > -1) {
-        $scope.menueroj.push($scope.menuoBazaAgordoj);
-        $scope.menueroj.push($scope.menuoMembroj);
-      }
-    }, errorService.error);
-
-   config.getConfig("idJunaAdministranto").then(function(response){
-      if($scope.uzanto.permesoj.indexOf(response.data.idJunaAdministranto) > -1) {
-         $scope.menueroj.push($scope.menuoMembroj);
-      }
-    }, errorService.error);
-  }
-
-  $scope.selektita = function(index, menuo) {
-    for(var i = 0; i < $scope.menueroj.length; i++) {
-      for(var j = 1; j < $scope.menueroj[i].length; j++) {
-        $scope.menueroj[i][j].ngClass = "";
-      }
-    }
-    menuo[index + 1].ngClass = "selektita";
+    $scope.menueroj = [{
+      nomo: "<i class='fa fa-address-card'></i> Adresaro",
+      klarigo: "Kontaktinformo de delegitoj, estraranoj, kaj aliaj stabanoj de UEA",
+      ligilo: "#!/kontaktreto"
+    },
+    {
+      nomo: "<i class='fa fa-book'></i> Teko",
+      klarigo: "Elŝutu revuojn kaj aliajn materialojn",
+      klarigi: false,
+      ligilo: "#!/teko"
+    },
+    {
+      nomo: "<i class='fa fa-globe'></i> Lokaj Asocioj kaj Grupoj",
+      klarigo: "Trovu lokajn asociojn kaj grupojn ligitajn al UEA",
+      ligilo: "#!/asocioj"
+    }];
   }
 
   $scope.elsaluti = function() {
     auth.elsaluti();
+  }
+
+  $scope.cxuFermi = function() {
+     var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+     if(width < 700) {
+       document.getElementById("mySidenav").style.width = "0";
+     }
   }
 
   window.onbeforeunload = function() {

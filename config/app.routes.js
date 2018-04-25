@@ -7,5 +7,26 @@ angular.module('membrspaco').config(function($routeProvider){
     .when("/", {
       templateUrl: "components/login/login.htm",
       controller: "loginCtrl"
-    });
+    })
+    .when("/kontaktreto", {
+      templateUrl: "components/kontaktreto/kontaktreto.htm",
+      controller: "kontaktretoCtrl"
+    })
+    .when("/profilo", {
+      templateUrl: "components/profilo/profilo.htm",
+      controller: "profiloCtrl"
+    })
+    .when("/asocioj", {
+      templateUrl: "components/asocioj/asocioj.htm",
+      controller: "asociojCtrl"
+    })
+    .when("/teko", {
+      templateUrl: "components/teko/teko.htm",
+      controller: "tekoCtrl"
+    })
+    .when("/404", {
+      templateUrl: "components/404.htm",
+      controller: "profiloCtrl"
+    })
+    .otherwise({redirectTo:'/404'});
 });

@@ -1,0 +1,66 @@
+<div class="enhavo" data-ng-init="init()">
+  <h1>Teko</h1>
+  <md-card class="col-md-3" md-theme-watch
+          ng-repeat="revuo in revuoj"  data-ng-init="getVolumoj(revuo)">
+     <img ng-src="{{revuo.volumoj[revuo.volumoj.length - 1].bildo}}"
+          ng-init="getVolumonKovrilbildo(revuo)"
+          style="max-height: 270px; max-width: 100%;"
+          class="md-card-image" alt="revua kovrilo">
+    <md-card-title-media>
+          <div class="md-media-sm card-media"></div>
+     </md-card-title-media>
+     <md-card-title>
+       <md-card-title-text>
+          <span class="md-headline">
+            {{revuo.titolo}}
+        </md-card-title-text>
+      </md-card-title>
+    <md-card-content>
+      <div ng-repeat="volumo in revuo.volumoj | orderBy:'-' | limitTo: revuo.montritaj">
+        <p>
+          {{volumo.numeroJaro}}/{{volumo.jaro}}
+          (<a href="" ng-click="montriDetalojn($event, volumo)">Vidi enhavliston</a>). Elŝultado:
+        </p>
+          <ul>
+              <li><a href="" ng-click="getKvalita(volumo)">
+              Kvalita PDF
+            </a></li>
+            <li><a href="" ng-click="getMalpeza(volumo)">
+              Malpeza PDF
+            </a></li>
+            <li><a href="" ng-click="getMp3(volumo)">
+              Sona revuo
+            </a></li>
+          </ul>
+      </div>
+    </md-card-content>
+    <md-button class="md-raised" ng-click="aldoni5(revuo)">
+      Pliaj volumoj
+    </md-button>
+  </md-card>
+</div>
+
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="detaloj">
+    <md-dialog layout-padding>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2>
+            Enhavlisto
+          </h2>
+          <span flex></span>
+          <a href="" ng-click="cancel()">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+          </a>
+        </div>
+      </md-toolbar>
+      <span>
+        <div class="col-md-12">
+          <img ng-src="{{bildo}}" alt="profilbildo" width="150" align="left"
+               style="padding-right: 10px"></img>
+          <div id="enhavlisto"></div>
+        </div>
+      </span>
+    </md-dialog>
+  </div>
+</div>
