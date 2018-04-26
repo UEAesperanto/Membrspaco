@@ -1,6 +1,6 @@
 app.controller("asociojCtrl", function ($scope, $rootScope, auth) {
     $scope.init = function() {
-        // auth.ensalutita();
+        auth.ensalutita();
         $rootScope.menuo = true;
 
         google.maps.visualRefresh = true;
@@ -27,7 +27,6 @@ app.controller("asociojCtrl", function ($scope, $rootScope, auth) {
           query: {
             select: "",
             from: "1El4SB7ANE9OqjiEvLLd7zPSGaxasOJstO5SR5QhI",
-            key: "AIzaSyDFoJXyPGCwhzk4V7qkAEdBT7qfSnX7odA",
             where: ""
           },
           options: {
