@@ -49,8 +49,8 @@ h2 {
   background-color: #F1F3F7;
   border-radius: 4px;
   padding: 15px;
-  width:  80%;
-  margin-left: 10%;
+  width:  50%;
+  margin-left: 25%;
 }
 
 .form a {
@@ -61,8 +61,8 @@ h2 {
   background-color: #326464;
   border-radius: 4px;
   padding: 15px;
-  width:  80%;
-  margin-left: 10%;
+  width:  50%;
+  margin-left: 25%;
 }
 
 .membrigxi a {
@@ -71,7 +71,7 @@ h2 {
 
 .logoo {
   margin-top:10px;
-  margin-left:15%;
+  margin-left:30%;
   float: left;
   margin-right:7px;
   width: 50px;
