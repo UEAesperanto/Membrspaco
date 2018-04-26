@@ -132,7 +132,5 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
        if(($scope.kategorioj) && ($scope.kategorioj != "")){
          $scope.montreblajAnoj = $scope.montreblajAnoj.filter(filterKategorio);
        }
-       console.log($scope.montreblajAnoj);
-
     }
 });
