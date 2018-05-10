@@ -1,5 +1,5 @@
 var app = angular.module("membrspaco", ["ngRoute", "xeditable", "ui.mask", "ngMessages",
-                                   "ngSanitize", "ngFileUpload", "ngMaterial"])
+                                   "ngSanitize", "ngFileUpload", "ngMaterial", "ui.grid"])
                  .filter("localeOrderBy", [function () {
                      return function (array, sortPredicate, reverseOrder) {
                          if (!Array.isArray(array)) return array;

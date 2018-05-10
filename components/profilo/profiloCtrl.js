@@ -9,6 +9,13 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
     profiloService.getUzanto($scope.unuaUzanto.id).then(function(response){
       $scope.uzanto = response.data[0];
       $scope.uzanto.naskigxtago = $scope.uzanto.naskigxtago.slice(0,10);
+      try {
+        $scope.uzanto.familianomo = decodeURIComponent(escape($scope.uzanto.familianomo));
+        $scope.uzanto.personanomo = decodeURIComponent(escape($scope.uzanto.personanomo));
+        $scope.uzanto.adreso = decodeURIComponent(escape($scope.uzanto.adreso));
+      } catch(error) {
+        console.error(error);
+      }
 
       landojService.getLandoj($scope.uzanto.idLando).then(function(response){
         $scope.lando = response.data[0];

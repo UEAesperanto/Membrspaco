@@ -9,12 +9,17 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $routeParams,
       window.alert($routeParams.message);
     }
 
+    if (($window.localStorage.getItem('tokenUzanto') != null) &&
+        ($window.localStorage.getItem('tokenUzanto') != 0)){
+      $window.location.href = '#!/profilo';
+      $window.location.reload();
+    }
+
     if($routeParams.token) {
-      //console.log()
       $window.localStorage.setItem('tokenUzanto', $routeParams.token);
       $window.localStorage.setItem('uzanto', JSON.stringify({'id': $routeParams.id}));
       $window.location.href = '#!/profilo';
-    //  $window.location.reload();
+      $window.location.reload();
     }
     var url = $location.$$absUrl.split("#!/");
     var url = url[0].split("/?");

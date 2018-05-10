@@ -90,6 +90,14 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
        $scope.limit += 20;
      }
 
+     $scope.escape = function(string) {
+        try {
+          return decodeURIComponent(escape(string));
+        } catch(error) {
+          return string;
+        }
+     }
+
      $scope.filtri = function() {
        var lauxfako = function(ano){
          for(var i = 0; i < ano.grupoj_obj.length; i++) {
@@ -108,16 +116,39 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
          return (ano.idLando == $scope.landoSelect);
        }
 
-       var sercxi = function(ano) {
-          var compare = $scope.filtrilo.toLowerCase();
-          if((ano.personanomo.toLowerCase().indexOf(compare) > -1) ||
-                  (ano.familianomo.toLowerCase().indexOf(compare) > -1) ||
-                  (ano.urbo.toLowerCase().indexOf(compare) > -1)) {
-            return true;
+
+       var sercxi = function(element) {
+         element.tutaNomo = element.personanomo + element.familianomo;
+         try {
+           var string =
+           decodeURIComponent(escape(element.tutaNomo)).normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+         } catch(error) {
+           var string = element.tutaNomo.toString().normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+         }
+
+         var filter = $scope.filtrilo.split(" ");
+         var isTrue = true;
+         for (var i = 0; i < filter.length; i++) {
+            var f = filter[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            if(string.indexOf(f) > -1){
+              isTrue = isTrue && true;
+            } else {
+              isTrue = false;
+            }
+          }
+          if(isTrue){
+            return isTrue;
           } else {
-            return false;
+            var f = $scope.filtrilo.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            string = Object.values(element).toString().normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            if(string.indexOf(f) > -1){
+              return true;
+            } else {
+              return false;
+            }
           }
        }
+
        $scope.montreblajAnoj = $scope.anoj;
 
        if(($scope.filtrilo) && ($scope.filtrilo != '')) {
@@ -132,5 +163,40 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
        if(($scope.kategorioj) && ($scope.kategorioj != "")){
          $scope.montreblajAnoj = $scope.montreblajAnoj.filter(filterKategorio);
        }
+    }
+
+    $scope.sercxiFako = function(idFaktemo) {
+      $scope.fakoSelected = idFaktemo;
+      $scope.filtri();
+    }
+
+    $scope.sercxiLando = function(idLando) {
+      $scope.landoSelect = idLando;
+      $scope.filtri();
+    }
+
+    $scope.sercxiLaborgrupo = function(idLaborgrupo) {
+      $scope.kategorioj = idLaborgrupo;
+      $scope.filtri();
+    }
+
+    $scope.forigiQuery = function() {
+      $scope.filtrilo = null;
+      $scope.filtri();
+    }
+
+    $scope.forigiFako = function() {
+      $scope.fakoSelected = null;
+      $scope.filtri();
+    }
+
+    $scope.forigiLando = function() {
+      $scope.landoSelect = null;
+      $scope.filtri();
+    }
+
+    $scope.forigiKategorio = function() {
+      $scope.kategorioj = null;
+      $scope.filtri();
     }
 });

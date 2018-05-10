@@ -1,6 +1,9 @@
 <div class="enhavo" data-ng-init="init()">
   <h1>Adresaro de UEA</h1>
-  <form class="form-inline" ng-submit="filtri()">
+  <form class="form-inline"
+        ng-submit="filtri()"
+        name="filtrado"
+        ng-show="montreblajAnoj">
     <div class="form-group">
       <label>Serĉi:</label>
       <input class="form-control" ng-model="filtrilo"
@@ -26,7 +29,6 @@
           </option>
         </select>
       </div>
-
       <div class="form-group">
         <label>laŭ fako: </label>
         <select class="form-control" ng-model="fakoSelected">
@@ -46,6 +48,45 @@
       Kaŝi aldonajn filtrilojn
     </button>
   </form>
+  <span>
+    <label>Aktivaj Filtriloj:</label>
+    <span ng-if="filtrilo && filtrado.$submitted">
+      Serĉvorto: {{filtrilo}}
+      <a href="" ng-click="forigiQuery()">
+        Forigi filtrilon
+        <span class="glyphicon glyphicon-trash" aria="hidden"></span>
+      </a>
+    </span>
+    <span ng-if="fakoSelected">
+      Faktemo: {{fakoj[fakoSelected].nomo}}
+      <a href="" ng-click="forigiFako()">
+        Forigi filtrilon
+        <span class="glyphicon glyphicon-trash" aria="hidden"></span>
+      </a>;
+    </span>
+    <span ng-if="landoSelect">
+      Lando: {{landoj[landoSelect].radikoEo}}
+      <a href="" ng-click="forigiLando()">
+        Forigi filtrilon
+        <span class="glyphicon glyphicon-trash" aria="hidden"></span>
+      </a>;
+    </span>
+    <span ng-if="kategorioj">
+      Kategorio: {{laborgrupoj[kategorioj].nomo}}
+      <a href="" ng-click="forigiKategorio()">
+        Forigi filtrilon
+        <span class="glyphicon glyphicon-trash" aria="hidden"></span>
+      </a>;
+    </span>
+  </span>
+
+  <p ng-if="!montreblajAnoj">
+    Ŝargas: <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+  </p>
+
+  <p ng-if="montreblajAnoj">
+    {{montreblajAnoj.length}} adreso(j) estis trovita(j).
+  </p>
 
   <div class='md-padding' layout="row" layout-wrap>
         <md-card class="col-md-5" md-theme-watch
@@ -53,20 +94,27 @@
            <md-card-title>
              <md-card-title-text>
                 <span class="md-headline">
-                  {{persono.titolo}} {{persono.personanomo}}
-                <b>{{persono.familianomo}}</b></span>
+                  {{persono.titolo}} {{escape(persono.personanomo)}}
+                <b>{{escape(persono.familianomo)}}</b></span>
               </md-card-title-text>
             </md-card-title>
             <md-card-content>
               <h4>
-                 {{persono.urbo}} - {{landoj[persono.idLando].radikoEo}}
+                 {{escape(persono.urbo)}} -
+                 <a href="" ng-click="sercxiLando(persono.idLando)">
+                   {{landoj[persono.idLando].radikoEo}}
+                 </a>
               </h4>
               <span>
                 <span ng-repeat="grupo in persono.grupoj_obj"
                       style="float:left">
-                  {{laborgrupoj[grupo.idGrupo].nomo}}
+                  <a href="" ng-click="sercxiLaborgrupo(grupo.idGrupo)">
+                    {{laborgrupoj[grupo.idGrupo].nomo}}
+                  </a>
                   <span ng-if="grupo.idFaktemo">
-                    ({{fakoj[grupo.idFaktemo].nomo}})
+                    (<a href="" ng-click="sercxiFako(grupo.idFaktemo)">
+                      <b>{{fakoj[grupo.idFaktemo].nomo}}</b>
+                    </a>)
                   </span>
                   <span ng-if="grupo.tasko">
                     ({{grupo.tasko}})
@@ -83,9 +131,15 @@
       </md-card>
     </div>
   </md-content>
-  <button type="button" class="btn btn-basic btn-block" ng-click="aldoni20()">
-    Ŝarĝi pliajn adresojn
+  <button type="button"
+          ng-if="montreblajAnoj.length >= limit"
+          class="btn btn-basic btn-block"
+          ng-click="aldoni20()">
+    Ŝargi pliajn adresojn
   </button>
+  <p ng-if="!montreblajAnoj.length >= limit" >
+    Ĉiuj eltrovoj montritaj
+  </p>
 </div>
 </div>
 
@@ -96,7 +150,7 @@
         <div class="md-toolbar-tools">
           <h2>
             Vidante detalojn por: {{elektitaAno.titolo}}
-            {{elektitaAno.personanomo}} {{elektitaAno.familianomo}} &nbsp&nbsp
+            {{escape(elektitaAno.personanomo)}} {{escape(elektitaAno.familianomo)}} &nbsp&nbsp
           </h2>
           <span flex></span>
           <a href="" ng-click="cancel()">
@@ -127,15 +181,14 @@
             </a>
           </p>
           <p>
-            <b>Adreso:</b> {{elektitaAno.adreso}}
+            <b>Adreso:</b> {{escape(elektitaAno.adreso)}}
           </p>
           <p>
             <b>Poŝtkodo:</b> {{elektitaAno.posxtkodo}}
           </p>
           <p>
-            <b>Urbo:</b> {{elektitaAno.urbo}}
+            <b>Urbo:</b> {{ecape(elektitaAno.urbo)}}
           </p>
-
           <p>
             <b>Lando:</b> {{landoj[elektitaAno.idLando].radikoEo}}
             <img src="{{landInformoj.flag}}" alt="flago" width="20"></img>

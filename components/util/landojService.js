@@ -21,6 +21,5 @@ app.service('landojService', function ($http, config, $window) {
        return $http.get("https://restcountries.eu/rest/v2/all");
     };
 
-
     return service;
 });
