@@ -145,12 +145,11 @@
 
 <div style="visibility: hidden">
   <div class="md-dialog-container" id="detaloj">
-    <md-dialog layout-padding>
+    <md-dialog layout-padding flex>
       <md-toolbar>
         <div class="md-toolbar-tools">
           <h2>
-            Vidante detalojn por: {{elektitaAno.titolo}}
-            {{escape(elektitaAno.personanomo)}} {{escape(elektitaAno.familianomo)}} &nbsp&nbsp
+            Adresaro de UEA
           </h2>
           <span flex></span>
           <a href="" ng-click="cancel()">
@@ -160,8 +159,11 @@
       </md-toolbar>
       <span>
         <div class="col-md-12">
-          <h3>Bazaj informoj:</h3>
           <img ng-src="{{bildo}}" alt="profilbildo" width="150" align="left" style="padding-right: 10px"></img>
+          <h4>
+            {{elektitaAno.titolo}}
+            {{escape(elektitaAno.personanomo)}} {{escape(elektitaAno.familianomo)}}
+          </h4>
           <p ng-if="elektitaAno.retposxto">
             <b>Retadreso:</b> {{elektitaAno.retposxto}}
           </p>
@@ -187,7 +189,7 @@
             <b>Poŝtkodo:</b> {{elektitaAno.posxtkodo}}
           </p>
           <p>
-            <b>Urbo:</b> {{ecape(elektitaAno.urbo)}}
+            <b>Urbo:</b> {{elektitaAno.urbo}}
           </p>
           <p>
             <b>Lando:</b> {{landoj[elektitaAno.idLando].radikoEo}}

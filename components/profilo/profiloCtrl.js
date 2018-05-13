@@ -58,6 +58,7 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
          });
      }, errorService.error);
 
+     $scope.$watch("$scope.grupoj", function(){
        config.getConfig("idMembrecgrupo").then(function(response) {
          $scope.idMembrecgrupo = response.data.idMembrecgrupo;
          profiloService.getGrupKat($scope.idMembrecgrupo).then(function(response){
@@ -80,6 +81,7 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
            }
           }, errorService.error);
         }, errorService.error);
+    });
   }
 
   $scope.upload = function() {
