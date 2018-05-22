@@ -3,6 +3,12 @@
 
   $scope.init = function() {
     $scope.uzanto = JSON.parse($window.localStorage.getItem('uzanto'));
+    if($scope.uzanto.permesoj.indexOf('membro') > -1) {
+      $scope.membro = true;
+    }
+
+    $scope.url_aligxilo = config.url_aligxilo;
+
     $scope.menueroj = [{
       nomo: "<i class='fa fa-address-card'></i> Adresaro",
       klarigo: "Kontaktinformo de delegitoj, estraranoj, kaj aliaj stabanoj de UEA",
@@ -19,6 +25,8 @@
       klarigo: "Trovu lokajn asociojn kaj grupojn ligitajn al UEA",
       ligilo: "#!/asocioj"
     }];
+
+    $scope.url_aligxilo = config.url_aligxilo;
   }
 
   $scope.elsaluti = function() {

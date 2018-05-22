@@ -13,4 +13,10 @@ app.service('errorService', function($window, auth) {
       $window.location.reload();
     }
   }
+  
+  this.errorMembro = function(error) {
+    if (error.status == 403) {
+      window.alert("Vi ne estas estas membro, do vi ne havas aliron al tio.");
+    }
+  }
 });

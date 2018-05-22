@@ -26,7 +26,7 @@ app.controller("kontaktretoCtrl", function ($scope, $rootScope, $window, $mdDial
                       $scope.anoj[index].grupoj.push(response.data[j].idGrupo);
                     }
                   }
-                });
+                }, errorService.errorMembro);
               $scope.montreblajAnoj = $scope.anoj;
             }
             $scope.laborgrupoj = {};

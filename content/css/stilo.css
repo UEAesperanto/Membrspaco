@@ -23,6 +23,14 @@ h2 {
   padding-top: 10px;
 }
 
+.myAlert-bottom {
+  position: fixed;
+  z-index: 3;
+  bottom: 5px;
+  left:2%;
+  width: 96%;
+}
+
 .menutitolo {
   cursor: pointer;
   color: white;

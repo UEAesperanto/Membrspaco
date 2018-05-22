@@ -1,11 +1,16 @@
-app.service('kontaktretoService', function ($http, config) {
+app.service('kontaktretoService', function ($http, $window, config) {
   var service = this;
 
   service.getAnoj = getAnoj;
   service.getFakoj = getFakoj;
 
   function getAnoj(idGrupo) {
-    return $http.get(config.api_url + "/grupoj/" + idGrupo + "/anoj");
+    var req = {
+        method: 'GET',
+        url: config.api_url + "/grupoj/" + idGrupo + "/anoj",
+        headers: {'x-access-token': $window.localStorage.getItem('tokenUzanto')}
+    };
+    return $http(req);
   }
 
   function getFakoj() {

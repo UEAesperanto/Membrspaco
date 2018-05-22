@@ -31,7 +31,11 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
 
     profiloService.elsxutiBildon($scope.unuaUzanto.id).then(
       function(response) {
-        $scope.bildo = response.data;
+        if(response.data.indexOf("No file found") > -1) {
+          $scope.bildo = 'content/img/profilo.png'
+        } else {
+          $scope.bildo = response.data;
+        }
       },
       function(err) {
         $scope.bildo = 'content/img/profilo.png'
@@ -70,16 +74,16 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
                  $scope.membrecgrupo = $scope.grupoj[key];
                }
              }
-           });
-           if($scope.membrecgrupo) {
-             if($scope.membrecgrupo.findato == null) {
-               $scope.gxis = "Dumviva membro";
-             } else {
-               var finjaro = parseInt($scope.membrecgrupo.findato.slice(0, 4)) - 1;
-               $scope.gxis = "Membro ĝis " +  finjaro;
+             if($scope.membrecgrupo) {
+               if($scope.membrecgrupo.findato == null) {
+                 $scope.gxis = "Dumviva membro";
+               } else {
+                 var finjaro = parseInt($scope.membrecgrupo.findato.slice(0, 4)) - 1;
+                 $scope.gxis = "Membro ĝis " +  finjaro;
+               }
              }
-           }
-          }, errorService.error);
+            });
+          });
         }, errorService.error);
     });
   }
@@ -102,6 +106,12 @@ app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
 
   $scope.encodeJson = function(data) {
     return JSON.stringify(data);
+  }
+
+  $scope.printiMembrokarto = function() {
+     $scope.$watch("$scope.gxis", function() {
+       window.print();
+     });
   }
 
 });

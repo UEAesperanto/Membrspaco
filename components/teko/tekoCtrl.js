@@ -1,5 +1,6 @@
 app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $mdDialog,
-                                      auth, tekoService, errorService, config) {
+                                      auth, tekoService, errorService, profiloService,
+                                      config) {
   $scope.init = function() {
     auth.ensalutita();
     $rootScope.menuo = true;
@@ -9,6 +10,17 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
         response.data[i].montritaj = 2;
       }
       $scope.revuoj = response.data;
+    }, errorService.error);
+
+    $scope.unuaUzanto = JSON.parse($window.localStorage.getItem('uzanto'));
+
+    profiloService.getUzanto($scope.unuaUzanto.id).then(function(response){
+      $scope.uzanto = response.data[0];
+      $scope.uzanto.naskigxjaro = new Date($scope.uzanto.naskigxtago.slice(0,10)).getFullYear();
+    }, errorService.error);
+
+    config.getConfig('junaAgxo').then(function(response){
+      $scope.agxo = response.data.junaAgxo;
     }, errorService.error);
   }
 
@@ -34,6 +46,19 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
         revuo.volumoj = vol;
       }
     });
+  }
+
+  $scope.cxuJuna = function(titolo){
+    if(titolo.toLowerCase().indexOf("kontakto") > -1) {
+      var jaro = new Date().getFullYear();
+      if(jaro - $scope.uzanto.naskigxjaro > $scope.agxo) {
+        return false
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
   }
 
   $scope.montriDetalojn = function(ev, volumo) {
@@ -65,27 +90,39 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
      $mdDialog.cancel();
    };
 
-   $scope.getKvalita = function(volumo) {
+   $scope.getKvalita = function(volumo, titolo) {
+     if(!$scope.cxuJuna(titolo)) {
+       window.alert("Vi ne rajtas elŝuti tiun revuon ĉar vi ne estas membro de TEJO");
+       return;
+     }
      tekoService.getVolumonKvalita(volumo.id).then(function(response) {
        if(response.data != "No file found"){
          window.location = response.data;
        } else {
-         window.alert("La malpeza PDF-a versio de tiu revuo ankoraŭ ne disponeblas");
+         window.alert("La kvalita PDF-a versio de tiu revuo ankoraŭ ne disponeblas");
        }
-     });
+     }, errorService.errorMembro);
    }
 
-   $scope.getMalpeza = function(volumo) {
+   $scope.getMalpeza = function(volumo, titolo) {
+     if(!$scope.cxuJuna(titolo)){
+       window.alert("Vi ne rajtas elŝuti tiun revuon ĉar vi ne estas membro de TEJO");
+       return;
+     }
      tekoService.getVolumonMalpeza(volumo.id).then(function(response) {
        if(response.data != "No file found"){
          window.location = response.data;
        } else {
          window.alert("La malpeza PDF-a versio de tiu revuo ankoraŭ ne disponeblas");
        }
-     });
+     }, errorService.errorMembro);
    }
 
-   $scope.getMp3 = function(volumo) {
+   $scope.getMp3 = function(volumo, titolo) {
+     if(!$scope.cxuJuna(titolo)){
+       window.alert("Vi ne rajtas elŝuti tiun revuon ĉar vi ne estas membro de TEJO");
+       return;
+     }
      tekoService.getMp3(volumo.id).then(function(response) {
        if(response.data != "No file found"){
          var link = document.createElement('a');
@@ -101,7 +138,7 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
        } else {
          window.alert("La sona versio de tiu volumo ankoraŭ ne disponeblas");
        }
-     });
+     }, errorService.errorMembro);
    }
 
 });
