@@ -1,5 +1,13 @@
 <div class="enhavo" data-ng-init="init()">
   <h1>Teko</h1>
+  
+  <p class="text-muted text-center busy" ng-if="!sxargita" 
+    style="background-color: gainsboro; position: fixed; width: 150px; height: 150px; z-index: 3; padding-top: 10px;">
+      <span class="fa fa-spinner fa-spin fa-4x"></span>
+      <br /><br />
+      Via revuo estas elŝutata...
+  </p>
+
   <md-card class="col-md-3" md-theme-watch
           ng-repeat="revuo in revuoj"  data-ng-init="getVolumoj(revuo)">
      <img ng-src="{{revuo.volumoj[revuo.volumoj.length - 1].bildo}}"
@@ -22,7 +30,7 @@
           (<a href="" ng-click="montriDetalojn($event, volumo)">Vidi enhavliston</a>). Elŝultado:
         </p>
           <ul>
-              <li><a href="" ng-click="getKvalita(volumo, revuo.titolo)">
+            <li><a href="" ng-click="getKvalita(volumo, revuo.titolo)">
               Kvalita PDF
             </a></li>
             <li><a href="" ng-click="getMalpeza(volumo, revuo.titolo)">

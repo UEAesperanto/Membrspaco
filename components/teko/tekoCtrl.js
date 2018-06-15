@@ -4,6 +4,7 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
   $scope.init = function() {
     auth.ensalutita();
     $rootScope.menuo = true;
+    $scope.sxargita = true;
 
     tekoService.getRevuoj().then(function(response) {
       for(var i = 0; i < response.data.length; i++){
@@ -95,9 +96,20 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
        window.alert("Vi ne rajtas elŝuti tiun revuon ĉar vi ne estas membro de TEJO");
        return;
      }
+     $scope.sxargita = false;
      tekoService.getVolumonKvalita(volumo.id).then(function(response) {
+      $scope.sxargita = true;
        if(response.data != "No file found"){
-         window.location = response.data;
+        fetch(response.data).then(function(res) {
+          res.blob().then(function(res){
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(res);
+            link.download = volumo.id.toString() + '.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          });
+        });
        } else {
          window.alert("La kvalita PDF-a versio de tiu revuo ankoraŭ ne disponeblas");
        }
@@ -109,10 +121,21 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
        window.alert("Vi ne rajtas elŝuti tiun revuon ĉar vi ne estas membro de TEJO");
        return;
      }
+     $scope.sxargita = false;
      tekoService.getVolumonMalpeza(volumo.id).then(function(response) {
+      $scope.sxargita = true;
        if(response.data != "No file found"){
-         window.location = response.data;
-       } else {
+        fetch(response.data).then(function(res) {
+          res.blob().then(function(res){
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(res);
+            link.download = volumo.id.toString() + '.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          });
+        });
+      } else {
          window.alert("La malpeza PDF-a versio de tiu revuo ankoraŭ ne disponeblas");
        }
      }, errorService.errorMembro);
@@ -123,11 +146,13 @@ app.controller("tekoCtrl", function ($scope, $rootScope, $window, $sanitize, $md
        window.alert("Vi ne rajtas elŝuti tiun revuon ĉar vi ne estas membro de TEJO");
        return;
      }
+     $scope.sxargita = false;
      tekoService.getMp3(volumo.id).then(function(response) {
+       $scope.sxargita = true;
        if(response.data != "No file found"){
-         var link = document.createElement('a');
          fetch(response.data).then(function(res) {
            res.blob().then(function(res){
+             var link = document.createElement('a');
              link.href = window.URL.createObjectURL(res);
              link.download = volumo.id.toString() + '.mp3';
              document.body.appendChild(link);

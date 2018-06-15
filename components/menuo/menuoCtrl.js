@@ -24,6 +24,11 @@
       nomo: "<i class='fa fa-globe'></i> Lokaj Asocioj kaj Grupoj",
       klarigo: "Trovu lokajn asociojn kaj grupojn ligitajn al UEA",
       ligilo: "#!/asocioj"
+    },
+    {
+      nomo: "<i class='fa fa-envelope'></i> Retlistoj",
+      klarigo: "Agordu viajn retlistajn preferojn",
+      ligilo: "#!/retlistoj"
     }];
 
     $scope.url_aligxilo = config.url_aligxilo;
