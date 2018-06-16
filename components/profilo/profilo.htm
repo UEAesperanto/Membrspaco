@@ -1,14 +1,8 @@
 <div class="enhavo" data-ng-init="init()">
-  <h3 class="col-md-9">
+  <div>
+  <h3 class="col-md-12">
     Bonvenon, {{uzanto.titolo}} {{uzanto.personanomo}}
     <b>{{uzanto.familianomo}}</b>
-  </h3>
-  <h3>
-    <span class="col-md-3" ng-if="gxis">
-        <button class="btn btn-default" ng-click="printiMembrokarto()">
-          <i class="fa fa-print" aria-hidden="true"></i> Printi membrokarton
-        </button>
-    </span>
   </h3>
   <div class="col-md-4" style="align:center">
     <h2>Profilbildo:</h2>
@@ -16,7 +10,7 @@
     <br>
     <button
        type="file"
-       class="btn btn-default"
+       class="btn btn-default btn-block"
        ngf-select
        ng-model="file"
        name="file"
@@ -25,7 +19,6 @@
        ngf-max-size="20MB">
        Redakti aŭ aldoni profilbildon
      </button>
-     <br><br>
     <p ng-show="file">
       Antaŭvido: <img style="width:100px;" ngf-thumbnail="file"/>
       <i ng-show="up.upload_form.file.$error.maxSize">Tro granda bildo
@@ -38,31 +31,15 @@
         Konfirmi alŝuton
       </button>
     </p>
-    <h4>
-      Anecoj:
-    </h4>
-    <ul ng-repeat="grupo in grupoj">
-      <li>
-          <b>{{grupo.nomo}}</b>: ĝis {{grupo.findato || "dumvive"}}
-      </li>
-    </ul>
-    <!-- <br>
-    <h4>
-      Datumprotektado:
-    </h4>
-    <ul>
-      <li>
-        <a ng-href="{{getJson()"
-           download="{{uzanto.id}}.json">
-            <i class="fa fa-download" aria-hidden="true"></i> Elŝuti datenojn pri mi de la Datumbazo de UEA
-        </a>
-      </li>
-      <li>
-        <a onclick="window.alert('Ne preta');">
-          <i class="fa fa-check-circle" aria-hidden="true"></i> Revizii datumprivatecpolitikon de UEA
-        </a>
-      </li>
-  </ul> -->
+    <br>
+    <button class="btn btn-default btn-block" ng-click="printiMembrokarto()" ng-show="gxis">
+      <i class="fa fa-print" aria-hidden="true"></i> Printi membrokarton
+    </button>
+    <br>
+    <a class="btn btn-default btn-block" href="#!/retlistoj" role="button" style="color:black">
+      <i class='fa fa-envelope'></i> Agordi retlistajn preferojn
+    </a>
+    <br>    
   </div>
   <div class="col-md-8">
     <h2>Pri vi: </h2>
@@ -170,6 +147,15 @@
     <p ng-if="uzanto.ueakodo" class="col-md-12">
       <b>Via UEA-kodo:</b> {{uzanto.ueakodo}}
     </p>
+    -------
+    <h4>
+        Anecoj:
+      </h4>
+      <ul ng-repeat="grupo in grupoj">
+        <li>
+            <b>{{grupo.nomo}}</b>: ĝis {{grupo.findato || "dumvive"}}
+        </li>
+      </ul>
  </div>
 </div>
 

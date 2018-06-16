@@ -21,8 +21,8 @@
       ligilo: "#!/teko"
     },
     {
-      nomo: "<i class='fa fa-globe'></i> Lokaj Asocioj kaj Grupoj",
-      klarigo: "Trovu lokajn asociojn kaj grupojn ligitajn al UEA",
+      nomo: "<i class='fa fa-globe'></i> Mapo de Asocioj kaj Grupoj",
+      klarigo: "Trovu lokajn asociojn kaj grupojn ligitajn al UEA pere de mapo",
       ligilo: "#!/asocioj"
     },
     {

@@ -1,4 +1,16 @@
 <div class="enhavo" data-ng-init="init()">
   <h1>Retlistoj</h1>
-  
+  <p>Abonu kaj malabonu retlistojn klakante je la butono je ĝia flanko</p>
+  <md-list>
+      <md-list-item class="secondary-button-padding" ng-repeat="retlisto in retlistoj" ng-init="cxuAbonanto(retlisto)">
+        <p>
+            <b>{{retlisto.nomo}}:</b>
+            {{retlisto.priskribo}}
+        </p>
+        <md-switch aria-label="Aboni" ng-model="retlisto.abonanto" ng-change="abonado(retlisto)">
+          <p ng-if="retlisto.abonanto">(Vi abonas)</p>
+          <p ng-if="!retlisto.abonanto">(Vi ne abonas)</p>
+        </md-switch>
+      </md-list-item>
+  </md-list>
 </div>

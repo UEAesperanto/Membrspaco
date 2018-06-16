@@ -24,6 +24,10 @@ angular.module('membrspaco').config(function($routeProvider){
       templateUrl: "components/teko/teko.htm",
       controller: "tekoCtrl"
     })
+    .when("/retlistoj", {
+      templateUrl: "components/retlistoj/retlistoj.htm",
+      controller: "retlistojCtrl"
+    })
     .when("/404", {
       templateUrl: "components/404.htm",
       controller: "profiloCtrl"

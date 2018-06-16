@@ -1,6 +1,6 @@
-app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize,
-                                        auth, profiloService, errorService,
-                                        landojService, config) {
+app.controller("profiloCtrl", function ($scope, $rootScope, $window, $sanitize, 
+  auth, profiloService, errorService, landojService, config) {
+    
   $scope.init = function() {
     auth.ensalutita();
     $rootScope.menuo = true;
