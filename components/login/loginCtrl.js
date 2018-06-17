@@ -31,8 +31,6 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $routeParams,
       });
     }
 
-    $scope.msg = "ERARO: Ni ne havas konekton kun la servilo nun";
-
     if (($window.localStorage.getItem('tokenUzanto') != null) &&
         ($window.localStorage.getItem('tokenUzanto') != 0)){
       $window.location.href = '#!/profilo';
@@ -40,29 +38,6 @@ app.controller("loginCtrl", function ($scope, $scope, $window, $routeParams,
     }
 
     $scope.url_aligxilo = config.url_aligxilo;
-    $scope.msg = "Ensalutu per via salutvorto kaj pasvorto:";
-  }
-
-  $scope.ensalutiRetadreso = function() {
-     var webAuth = new auth0.WebAuth({
-          domain: config.auth0Domain,
-          clientID: config.auth0clientID,
-          responseType: 'code',
-          redirectUri: config.api_url + '/uzantoj/ensaluti/senpasvorto',
-          scope: 'openid profile'
-      });
-      webAuth.passwordlessStart({
-        connection: 'email',
-        send: 'link',
-        email: $scope.retadreso,
-      }, function (err,res) {
-          if(err) {
-            console.log(err);
-            window.alert("Okazis eraro! Bonvole provu alian eblon ensaluti!");
-          } else {
-            window.alert("Ligilo estis sendita al via retadreso");
-          }
-      });
   }
 
   $scope.ensaluti = function() {

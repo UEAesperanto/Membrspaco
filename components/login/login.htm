@@ -4,15 +4,16 @@
     <h1> Universala Esperanto-Asocio - <b> Membrospaco</b></h1>
   </div>
 </div>
-
 <div class="container login" data-ng-init="init()">
   <div class="row form">
+      <div ng-if="msg" class="alert alert-danger" role="alert">
+          <h4>{{msg}}</h4>
+      </div>
     <form ng-submit="ensaluti()" class="col-md-12">
-      <h4>{{msg}}</h4>
         <div class="form-group">
-          <label for="uzantnomo">Via salutvorto (konata de UEA):</label>
+          <label for="uzantnomo">Salutvorto:</label>
           <input type="text" class="form-control"
-                 id="uzantnomo" ng-model="uzanto.uzantnomo">
+                 id="uzantnomo" ng-model="uzanto.uzantnomo" ng-click="msg = null">
         </div>
         <div class="form-group">
           <label for="pwd">Pasvorto:</label>
@@ -25,27 +26,6 @@
           <b>Mi forgesis mian pasvorton</b>
         </a>
       </form>
-    <!-- <div class="col-md-6">
-      <h4>
-        Ensalutu sen pasvorto pere de via retpoŝto
-      </h4>
-      <form ng-submit="ensalutiRetadreso()">
-        <div class="form-group">
-          <label>Retadreso konata de UEA</label>
-          <input type="email" ng-model="retadreso" class="form-control" placeholder="Retadreso">
-        </div>
-        <button type="submit" class="btn btn-default mb-4">
-          Sendi ligilon
-          <img src="https://cdn.auth0.com/website/assets/pages/press/img/resources/passwordless-logo-inverted-65f0d8f046.svg" alt="aut0" width="100">
-        </button>
-      </form>
-      <br>
-      <p>
-        Ni sendos ligilon al via retadreso, kaj vi povos klaki je
-        ĝi por ensaluti, tiu nomiĝas Auth0 passwordless
-        teknologio kaj ne estas malsekura!
-      </p>
-    </div>-->
   </div>
   <div class="row membrigxi col-md-12">
     <a ng-href="{{url_aligxilo}}" target="_blank">
@@ -53,16 +33,15 @@
     </a>
   </div>
 </div>
-<div class="row" align="center">
+<p class="text-center">
   Se vi ne sukcesas ensaluti pro iu ajn kialo, skribu al <b>info@uea.org</b>
-</div>
-<br>
-<div class="row" align="center">
+</p>
+<p class="text-center" style="padding-top:8%">
   Tiu sistemo estis programita de
   <a href="https://asocio.net" target="_blank" style="color:#F7B733">
     Asocio.net
   </a>
-</div>
+</p>
 <div style="visibility: hidden">
   <div class="md-dialog-container" id="forgesis">
     <md-dialog flex>
