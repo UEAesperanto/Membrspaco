@@ -1,0 +1,10 @@
+version: '2'
+services:
+    web:
+        image: httpd:2.4
+        container_name: "uea-membro"
+        restart: always
+        volumes:
+            - ../:/usr/local/apache2/htdocs/
+        ports:
+          - 8001:80
